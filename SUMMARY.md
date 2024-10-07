@@ -1,6 +1,12 @@
 # Table of contents
 
-* [Quick start](README.md)
+* [Quex](overview/quick-start.md)
+
+## Overview
+
+* [Why Quex?](overview/why-quex.md)
+* [Example projects](overview/???.md)
+
 
 ## Oracles
 
@@ -15,10 +21,6 @@
 [//]: # (- Payments)
 [//]: # (- Using smart-conract)
 
-## Overview
-
-* [How does Oracle work?](overview/how-does-oracle-work?.md)
-* [Example projects](overview/???.md)
 
 [//]: # (* [Editor]&#40;basics/editor.md&#41;)
 
