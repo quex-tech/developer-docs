@@ -1,10 +1,10 @@
 # Table of contents
 
-* [Quex](quick-start.md)
+* [Quex](readme)
 
 ## Overview
 
-* [Quex overview](overview/intro.md)
+* [Quex overview](overview/readme)
     * [Why another oracle?](overview/why-another.md)
     * [Our oracle security](overview/security.md)
     * [Onchain verification](overview/verification.md)
