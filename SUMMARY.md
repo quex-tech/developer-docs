@@ -4,9 +4,9 @@
 
 ## Overview
 
-* [Quex overview](overview/readme)
+* [Quex overview](overview/readme.md)
     * [Why another oracle?](overview/why-another.md)
-    * [Our oracle security](overview/security.md)
+    * [Quex oracle security](overview/security.md)
     * [Onchain verification](overview/verification.md)
 
 ## Oracles
