@@ -11,7 +11,8 @@
 
 ## Building with Quex
 * [Section overview](build/readme.md)
-* [Select data source](build/select-data.md)
+* [Select data source](build/select-data-source.md)
+* [Select data](build/select-data.md)
 * [Select post-processing](build/post-processing.md)
 * [Onchain access](build/onchain.md)
 
