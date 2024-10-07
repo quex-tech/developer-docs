@@ -1,0 +1,5 @@
+## Hardware-level security
+
+Quex oracles leverage Trusted Execution Environments (TEE) to retrieve off-chain data with cryptographic guarantees. TEEs (we currently rely on Intel's chips with TDX support), create secure enclaves where data is processed and signed within a hardware-protected environment. These secure enclaves ensure that the private keys used for data signing never leave the chip, preventing any tampering with the data retrieval process.
+
+When a Quex oracle is initialized, it generates a private key within the TEE. The key is used to sign any data retrieved from external sources, ensuring its authenticity. By using TLS protocols within the same enclave, the system guarantees that the retrieved data remains unmodified, as the entire process—from fetching to signing—occurs within the isolated, secure environment of the TEE. This makes Quex's oracle as secure as the underlying chip it operates on, providing a hardware-level defense against manipulation.
