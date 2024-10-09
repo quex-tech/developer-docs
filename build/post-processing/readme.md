@@ -1,6 +1,16 @@
 # Post-Processing
 
-In this section, we explore how Quex allows you to perform verifiable post-processing on fetched data, making it more suitable for on-chain use by extracting relevant information and performing computations.
+In the [Retrieve Data](../retrieve-data) section, we demonstrated how to retrieve a certified response from the Binance API, which returns data in the following format:
+
+```json
+[
+  {"symbol": "ETHBTC", "price": "0.03914000"},
+  {"symbol": "LTCBTC", "price": "0.00105700"},
+  ...
+]
+```
+
+However, using this raw data directly within smart contracts is not suitable due to its structure and redundancy. Thus, in this section, we explore how Quex allows you to perform verifiable computations for post-processing on fetched data, making it more suitable for on-chain use by extracting relevant information and performing computations.
 
 ## Examples
 
