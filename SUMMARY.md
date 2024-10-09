@@ -11,7 +11,7 @@
 
 ## Building with Quex
 * [Section overview](build/readme.md)
-* [Select data](build/select-data.md)
+* [Retrieve data](build/select-data.md)
 * [Post-Processing](build/post-processing/readme.md)
     * [Extracting Integer Values](build/post-processing/extract-int.md)
     * [Index Calculation](build/post-processing/calculate-index)

@@ -1,4 +1,4 @@
-# Select Data
+# Retrieve data
 
 Let's start with an example where you need to get cryptocurrency prices on-chain. In this case, we'll use Binance’s public API to fetch the data.
 
