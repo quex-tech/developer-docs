@@ -27,7 +27,7 @@ In this example, we will calculate the price of an index composed of 60% `ETHBTC
     - Selects the prices for both `ETHBTC` and `LTCBTC` from the JSON array.
     - Converts each price to a number.
     - Calculates the weighted average: 60% of `ETHBTC` and 40% of `LTCBTC`.
-    - Multiplies the result by 10<sup>8</sup> and rounds it down to an integer.
+    - Multiplies the result by 10^8 and rounds it down to an integer.
 - The `"schema": "int256"` indicates that the processed result will be returned as an integer value.
 
 2. **Certified Response Structure**
@@ -49,4 +49,4 @@ In this example, we will calculate the price of an index composed of 60% `ETHBTC
    }
    ```
 
-   The `value` field now contains the calculated index price, with the weighted average of `ETHBTC` and `LTCBTC` prices multiplied by 10<sup>8</sup> for convenient on-chain use. Note that only the final number is available on-chain, omitting all intermediate steps such as fetching the prices and performing the calculations. However, all these steps are encoded within the `feedID` and secured with the signature generated within the TEE module, ensuring the result's integrity and preventing manipulation.
+   The `value` field now contains the calculated index price, with the weighted average of `ETHBTC` and `LTCBTC` prices multiplied by 10^8 for convenient on-chain use. Note that only the final number is available on-chain, omitting all intermediate steps such as fetching the prices and performing the calculations. However, all these steps are encoded within the `feedID` and secured with the signature generated within the TEE module, ensuring the result's integrity and preventing manipulation.
