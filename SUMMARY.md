@@ -7,7 +7,7 @@
 * [Section overview](overview/readme.md)
 * [Why another oracle?](overview/why-another.md)
 * [Quex oracle security](overview/security.md)
-* [Onchain verification](build/onchain/verification.md)
+* [Onchain verification](overview/verification.md)
 
 ## Building with Quex
 * [Section overview](build/readme.md)
