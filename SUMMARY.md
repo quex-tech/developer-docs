@@ -16,6 +16,9 @@
     * [Extracting Integer Values](build/post-processing/extract-int.md)
     * [Index Calculation](build/post-processing/calculate-index)
 * [Accessing Protected Data](build/private-patch.md)
+* [On-Chain Integration](build/onchain/readme.md)
+  * [Building a Query](build/onchain/building-query.md)
+  * [Handling the Response](build/onchain/handling-response.md)
 
 ## Become a data provider
 
