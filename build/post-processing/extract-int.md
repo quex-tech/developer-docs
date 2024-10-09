@@ -1,6 +1,6 @@
 ## Example 1: Extracting ETH Price and Converting to an Integer
 
-In this example, we will extract the `ETHBTC` price from the raw JSON response and multiply it by \(10^8\), rounding it
+In this example, we will extract the `ETHBTC` price from the raw JSON response and multiply it by 10<sup>8</sup>, rounding it
 to an integer value. This approach makes the data more manageable and suitable for on-chain use.
 
 To extract the `ETHBTC` price and process it into an integer, modify the request to the Quex TEE module as follows:
@@ -26,7 +26,7 @@ To extract the `ETHBTC` price and process it into an integer, modify the request
   parameter: `.[] | select(.symbol == "ETHBTC") | (.price | tonumber * 100000000 | floor)` performs the following steps:
     - Selects the `ETHBTC` price from the JSON array.
     - Converts the price to a number.
-    - Multiplies it by \(10^8\) and rounds down to an integer.
+    - Multiplies it by 10<sup>8</sup> and rounds down to an integer.
 - The `"schema": "int256"` indicates that the processed result will be returned as an integer value.
 
 The certified response will be returned in the following format:
@@ -46,4 +46,4 @@ The certified response will be returned in the following format:
 }
 ```
 
-The `value` field now contains the extracted `ETHBTC` price, multiplied by \(10^8\) to make it suitable for on-chain use. Note that only the final number is available on-chain, omitting all the intermediate steps such as making the request to Binance and processing the result. However, all these steps are encoded within the `feedID` and are secured with the signature, which is generated within the TEE module, preventing any possibility of manipulating the result.
+The `value` field now contains the extracted `ETHBTC` price, multiplied by 10<sup>8</sup> to make it suitable for on-chain use. Note that only the final number is available on-chain, omitting all the intermediate steps such as making the request to Binance and processing the result. However, all these steps are encoded within the `feedID` and are secured with the signature, which is generated within the TEE module, preventing any possibility of manipulating the result.
