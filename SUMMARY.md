@@ -15,6 +15,7 @@
 * [Post-Processing](build/post-processing/readme.md)
     * [Extracting Integer Values](build/post-processing/extract-int.md)
     * [Index Calculation](build/post-processing/calculate-index)
+* [Accessing Protected Data](build/private-patch.md)
 
 ## Become a data provider
 
