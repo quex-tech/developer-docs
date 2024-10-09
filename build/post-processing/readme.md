@@ -1,6 +1,6 @@
 # Post-Processing
 
-In the [Retrieve Data](../retrieve-data) section, we demonstrated how to retrieve a certified response from the Binance API, which returns data in the following format:
+In the [Retrieve Data](../retrieve-data.md) section, we demonstrated how to retrieve a certified response from the Binance API, which returns data in the following format:
 
 ```json
 [
