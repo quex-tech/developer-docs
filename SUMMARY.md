@@ -7,7 +7,7 @@
 * [Section overview](overview/readme.md)
 * [Why another oracle?](overview/why-another.md)
 * [Quex oracle security](overview/security.md)
-* [Onchain verification](overview/verification.md)
+* [Onchain verification](build/onchain/verification.md)
 
 ## Building with Quex
 * [Section overview](build/readme.md)
@@ -19,6 +19,7 @@
 * [On-Chain Integration](build/onchain/readme.md)
   * [Building a Query](build/onchain/building-query.md)
   * [Handling the Response](build/onchain/handling-response.md)
+  * [Verification](build/onchain/verification.md)
 
 ## Become a data provider
 
