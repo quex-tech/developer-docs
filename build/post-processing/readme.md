@@ -7,5 +7,5 @@ In this section, we explore how Quex allows you to perform verifiable post-proce
 [Extracting Integer Values](extract-int.md)
 > Learn how to extract a specific price and convert it to an integer value for efficient on-chain processing.
 
-[Index Calculation](index.md)
+[Index Calculation](calculate-index)
 > See how to calculate a weighted index price using multiple assets and make the result available on-chain.

@@ -44,7 +44,7 @@ In this example, we will calculate the price of an index composed of 60% `ETHBTC
      "data": {
        "timestamp": 1696523461,
        "feedID": "0xabc123...",
-       "value": 2876000
+       "value": 2389480
      }
    }
    ```

@@ -14,7 +14,7 @@
 * [Select data](build/select-data.md)
 * [Post-Processing](build/post-processing/readme.md)
     * [Extracting Integer Values](build/post-processing/extract-int.md)
-    * [Index Calculation](build/post-processing/index.md)
+    * [Index Calculation](build/post-processing/calculate-index)
 
 ## Become a data provider
 
