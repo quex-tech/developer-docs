@@ -23,4 +23,4 @@
 
 ## Become a data provider
 
-* [How to run your own node?](data-providers/how-to-launch-your-oracle.md)
+* [Join the Quex network](data-providers/launch-node.md)
