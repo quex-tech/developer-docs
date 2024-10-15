@@ -1,4 +1,4 @@
-## Example 3: Retrieveing Complex Data
+## Example 3: Complex Data Retrieval
 
 In this example we illustrate how to pass complex structures for on-chain usage with non-trivial schema.
 Suppose the on-chain handler requires five bids and asks from Binance for the symbol `BTCUSDT` together with the value
