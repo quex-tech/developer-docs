@@ -9,6 +9,7 @@
 * [Post-Processing](build/post-processing/readme.md)
   * [Extracting Integer Values](build/post-processing/extract-int.md)
   * [Index Calculation](build/post-processing/calculate-index.md)
+  * [Complex Data Structures](build/post-processing/structs.md)
 * [Accessing Protected Data](build/private-patch.md)
 * [On-Chain Integration](build/onchain/readme.md)
   * [Building a Query](build/onchain/building-query.md)
