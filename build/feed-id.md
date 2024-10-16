@@ -1,18 +1,16 @@
 ### Feed Id Calculation
 
-In this section, we describe the method used to calculate the `feedID` within Quex, ensuring it remains deterministic and secure. This process involves applying a `feed_id_filter` to the input JSON before generating a hash. This method allows sensitive information, such as API keys, to be excluded from the hash, ensuring the `feedID` remains consistent even when such data changes, like during API key rotations.
+In this section, we describe the method used to calculate the `feedID` within Quex, ensuring it remains deterministic and secure.
 
-#### Applying the Feed Id Filter
+In a previous section, we introduced a method to patch requests with encrypted data, allowing sensitive information like API keys to be hidden. While this is useful for security, it introduces a new problem: the `feedID` will vary between different nodes accessing the same data sources because they may use different API keys. Even for a single node, rotating API keys could result in different `feedID`s, which would cause issues for the on-chain clients of Quex.
 
-The first step in computing the `feedID` is to apply the `feed_id_filter`, which removes any fields that should not contribute to the `feedID`. For instance, when dealing with credential-protected data, fields such as API keys or other sensitive information are excluded from the final hash. By using a `feed_id_filter`, only the stable and relevant parts of the input data are retained for the next steps in the process. 
+To solve this, we introduce the `feed_id_filter` parameter—a JQ program that is applied to the entire input request JSON before calculating the `feedID`. For example, a filter like `"feed_id_filter": "del(.patch.headers[]?.ciphertext)"` removes the `ciphertext` fields from the headers in the `patch` section. As a result, the filtered JSON will be identical to the original request, except that the sensitive `ciphertext` fields have been excluded. The `feed_id_filter` itself is included in this JSON, ensuring transparency about how the request was processed before calculating the `feedID`.
 
-This filtering ensures that the `feedID` remains unchanged even if encrypted fields like API keys are rotated, allowing the feed to stay consistent while keeping sensitive information secure.
+Once the `feed_id_filter` has been applied, the resulting JSON is sorted by keys and serialized into a compact single-line string. This ensures a consistent representation of the request data.
 
-#### Sorting Keys for Deterministic Feed Id
+Finally, the Keccak cryptographic hash function is applied to the byte representation of this string. This guarantees that every unique request generates a unique `feedID`, while filtering out irrelevant data like API keys to maintain consistency across nodes.
 
-After the `feed_id_filter` has been applied, the remaining data structure is sorted by its keys to ensure determinism. This guarantees that the same input, irrespective of the order of its fields, will always produce the same `feedID`. Sorting the input structure ensures that any variations in the field order do not affect the hash calculation, providing a consistent result across different executions.
-
-#### Example of Input Data
+#### Example
 
 Consider the following input structure:
 
@@ -44,10 +42,6 @@ Consider the following input structure:
 }
 ```
 
-In this example, the input includes request parameters to fetch cryptocurrency data from CoinMarketCap. The `patch.headers` field contains an encrypted API key that should not affect the `feedID` calculation. To handle this, the `feed_id_filter` is applied to remove the `ciphertext` from the headers.
+In this example, the `feed_id_filter` removes the `ciphertext` field from the `patch.headers`. The resulting JSON, minus the sensitive data, is then sorted by keys and serialized into a compact string. This string is then hashed using the Keccak function to produce the final `feedID`.
 
-#### Creating Bytes for Hash Calculation
-
-After applying the `feed_id_filter` and sorting the remaining fields by their keys, the input JSON is serialized into a byte string. This serialized representation is then used to compute the hash. By sorting the keys and filtering out sensitive data, the system ensures that the same input, regardless of the order or the presence of dynamic elements like encrypted API keys, consistently produces the same byte sequence. This byte sequence is then hashed using a cryptographic function (Keccak), producing the final `feedID` used in the Quex system.
-
-This method ensures that the `feedID` remains stable and secure, even when sensitive data is rotated or updated, while maintaining determinism in the calculation process.
+This method ensures that the `feedID` remains consistent and secure, even when API keys or other sensitive data are updated.
