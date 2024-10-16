@@ -11,6 +11,7 @@
   * [Index Calculation](build/post-processing/calculate-index.md)
   * [Complex Data Retrieval](build/post-processing/structs.md)
 * [Accessing Protected Data](build/private-patch.md)
+* [Feed id calculation](build/feed-id.md)
 * [On-Chain Integration](build/onchain/readme.md)
   * [Building a Query](build/onchain/building-query.md)
   * [Handling the Response](build/onchain/handling-response.md)

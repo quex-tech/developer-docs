@@ -54,7 +54,7 @@ After submitting this request, the response will include a signed result in JSON
 
 In this signed response:
 
-- The feedID serves as a unique identifier for the request and is calculated as a keccak256 hash of the entire request structure. This ensures that any change to the request, such as modifying a parameter or the path, will result in a different feedID, ensuring the integrity of the data.
+- The feedID serves as a unique identifier for the request and is calculated as a keccak256 hash of the entire request structure. This ensures that any change to the request, such as modifying a parameter or the path, will result in a different feedID, ensuring the integrity of the data. For more information 
 - The cryptographic signature covers the entire response, including the feedID, the timestamp, and the data itself, providing strong guarantees that the data was securely fetched and signed by the TEE at the moment of the request.
 
 
