@@ -25,3 +25,4 @@
 ## Become a data provider
 
 * [Join the Quex network](data-providers/launch-node.md)
+* [Follow us!](community.md)
