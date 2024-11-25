@@ -12,9 +12,10 @@
   * [Complex Data Retrieval](build/post-processing/structs.md)
 * [Accessing Protected Data](build/private-patch.md)
 * [On-Chain Integration](build/onchain/readme.md)
-  * [Building a Query](build/onchain/building-query.md)
-  * [Handling the Response](build/onchain/handling-response.md)
-  * [Verification](build/onchain/verification.md)
+  * [General Workflow](build/onchain/general.md)
+  * [Quex Data Oracle Tutorial](build/onchain/tutorial.md)
+  * [Supported Scripting](build/onchain/jq-subset.md)
+  * [Contract Addresses](build/onchain/contract-addresses.md)
 
 ## How it works?
 
