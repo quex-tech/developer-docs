@@ -5,7 +5,7 @@ to create your own data feed on Quex Data Oracle query and use the data.
 
 For the sake of example we consider the part of dApp which collects and stores five best bids and five best asks on
 BTC-USDT pair on Binance together with their `lastUpdateId`. Normally you would not need the persistent storage of this
-data due to high gas consumtpion and corresponding transaction fees. You would rather make some aggregation and
+data due to high gas consumption and corresponding transaction fees. You would rather make some aggregation and
 implement some decision logic with as few persistent storage as possible. However, this example is good in demonstrating
 most of Quex capabilities. Namely
 + Complex HTTP query to a third party API
@@ -48,7 +48,7 @@ a `Jq` script (filter), used to convert response JSON to `schema`. Quex uses the
 post-processing. The list of supported operations can be found [here](./jq-subset.md).
 
 In `config.json` provide your RPC URL, address of Quex `FeedRegistry` contract and the path to the file with your
-datafeed description (`quex_feed.json`)
+data feed description (`quex_feed.json`)
 ```json
 {
   "rpc_url": "https://governors.testnet.redbelly.network",
@@ -82,9 +82,9 @@ feed_id:       0x6279d8a0a0ae2db6a6ad495ec2b4c7dfc4b482cd3495035b4053e8dd8b359a6
 ```
 The most important field here is feed ID. Take a note of it
 
-You can see the corresponding transictions in the explorer. The parts of the datefeed description are reusable. So, in case you will
+You can see the corresponding transactions in the explorer. The parts of the data feed description are reusable. So, in case you will
 be registering new data feeds manually, you can reuse `request_id`, `patch_id`, `schema_id` and `filter_id` for new
-datafeeds without sending already recorded data on-chain.
+data feeds without sending already recorded data on-chain.
 
 ## Create a Smart-Contract
 
@@ -182,7 +182,7 @@ Every time we wish to query the data, we can use `request` method of the contrac
 `request` which must account for the gas used by `processResponse`. Additionally, the amount of native coins not less
 than `tx.gasprice*callbackGasLimit` must be paid in `request` call to cover these gas expenses.
 
-Do not worry about guesing the precise value of the gas price. The `QuexRequestRegistry` contract calculates the exact
+Do not worry about guessing the precise value of the gas price. The `QuexRequestRegistry` contract calculates the exact
 price and returns the change within the same transaction, so you can safely transfer a bit more than needed.
 
 In our example the callback has to store large structures of `OrderBook`, and a gas consumption is a bit less than 600k
