@@ -1,6 +1,6 @@
 # Supported Jq Expressions
 
-Quex Oracle supports the subset of Jq language for response post-processing. The supported operations are
+Quex Oracle supports the subset of [Jq](https://jqlang.github.io/jq/manual/) language for response post-processing. The supported operations are
 
 + `+`, `-`, `*`, `/`, `%`
 + Selecting field by key or index via `.` or `[]`
