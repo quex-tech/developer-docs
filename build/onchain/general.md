@@ -9,7 +9,7 @@ The general workflow with Quex oracle consists of the following steps:
    contract, gas limit for the callback and the fee to cover this gas limit.
 4. After the data is fetched, it is sent back to the callback with specified gas limit in a separate transaction
 
-## Datafeed Creation
+### Data Feed Creation
 
 1. Define the request to TLS-secured endpoint of the data provider. It can by any third-party service given that TLS
    version is no lower than 1.2, and the response is provided as JSON file.
@@ -20,7 +20,7 @@ The general workflow with Quex oracle consists of the following steps:
    the details. The script must yield the mixed-type JSON array in order to be packed into Solidity structure.
 4. Annotate the types of fields in the array returned from the previous step.
 
-## Deploying Client Contract
+### Deploying Client Contract
 
 The client contract is your own contract which will handle the data. It must implement the method for accepting the data
 from `V1RequestLogic` contract. Note that it is the responsibility of smart-contract developer to
@@ -30,7 +30,7 @@ that one must never rely on `requestId` solely. Always check `feedId` as well, a
 signature of
 Trust Domain, whereas `requestId` is not.
 
-## Data Querying
+### Data Querying
 
 Data querying consists of calling `sendRequest(feedId, callbackAddress, callbackMethod, gasLimit)` on
 `V1RequestRegistry` contract. Once this method is called, the Quex relayer collects the details of the request and

@@ -13,7 +13,7 @@ most of Quex capabilities. Namely
 + Ability to receive the data on-chain as a ready-to-use user-defined structure without the hassle of reencoding,
   repacking or introducing large argument lists
 
-## Register the request on-chain
+### Register the request on-chain
 
 Clone the interfaces repository with the helper script to register the new request
 ```bash
@@ -86,7 +86,7 @@ You can see the corresponding transactions in the explorer. The parts of the dat
 be registering new data feeds manually, you can reuse `request_id`, `patch_id`, `schema_id` and `filter_id` for new
 data feeds without sending already recorded data on-chain.
 
-## Create a Smart-Contract
+### Create a Smart-Contract
 
 Create your contract which utilizes the data from the oracle. Here is an example for our particular case. Note that
 `FEED_ID` is taken as in the output of `create_feed.py`.
@@ -174,7 +174,7 @@ contract C {
 Deploy your contract to the network where Quex data oracles exist. This particular contract can be compiled with
 `"viaIR": true` option to allow structure array copying.
 
-## Query Data
+### Query Data
 
 Every time we wish to query the data, we can use `request` method of the contract above. It will pass the request to
 `QuexRequestRegistry` contract, and after the data is fetched and post-processed it will be returned to
