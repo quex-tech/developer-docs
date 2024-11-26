@@ -44,7 +44,7 @@ Edit the data feed description (`quex_feed.json`) to meet your desired request. 
 The details on how these fields are constructed can be found [here](../post-processing/structs.md). Briefly, `request`
 has the structure of HTTP request to be made by an oracle, `pathch` is designated to contain the encrypted private
 fields of the request, `schema` is the type of the structure which is to be ABI-encoded and passed on-chain, `filter` is
-a `Jq` script (filter), used to convert response JSON to `schema`. Quex uses the subset of Jq language for
+a `jq` filter, used to convert response JSON to `schema`. Quex uses the subset of jq language for
 post-processing. The list of supported operations can be found [here](./jq-subset.md).
 
 In `config.json` provide your RPC URL, address of Quex `FeedRegistry` contract and the path to the file with your

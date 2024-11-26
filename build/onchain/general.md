@@ -16,8 +16,9 @@ The general workflow with Quex oracle consists of the following steps:
 2. Define the private fields of the request to data provider endpoint. For example, API keys, access tokens etc. These
    will appear on-chain in encrypted form. The decryption will occur inside Trust Domain only.
 3. Define the post-processing routine for the received JSON. The post-processing is a script defined as
-   [jq](https://jqlang.github.io/jq/manual/) syntax. Quex oracle supports the subset of jq. See Supported Filters for
-   the details. The script must yield the mixed-type JSON array in order to be packed into Solidity structure.
+   [jq](https://jqlang.github.io/jq/manual/) syntax. Quex oracle supports the subset of jq. See [Supported
+   Filters](./jq-subset.md) for the details. The script must yield the mixed-type JSON array in order to be packed into
+   Solidity structure.
 4. Annotate the types of fields in the array returned from the previous step.
 
 ### Deploying Client Contract
@@ -26,9 +27,7 @@ The client contract is your own contract which will handle the data. It must imp
 from `V1RequestLogic` contract. Note that it is the responsibility of smart-contract developer to
 implement the control that only `V1RequestLogic` has the right of this method invocation. The returned data contains
 ID of the particular request (needed to distinguish between requests made concurrently) and `DataItem` object. Note also
-that one must never rely on `requestId` solely. Always check `feedId` as well, as `feedId` is the field is under the
-signature of
-Trust Domain, whereas `requestId` is not.
+that one must never rely on `requestId` solely. Always check the address of the contract which delivered the data.
 
 ### Data Querying
 

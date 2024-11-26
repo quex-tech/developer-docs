@@ -14,7 +14,7 @@
 * [On-Chain Integration](build/onchain/readme.md)
   * [General Workflow](build/onchain/general.md)
   * [Quex Data Oracle Tutorial](build/onchain/tutorial.md)
-  * [Supported Scripting](build/onchain/jq-subset.md)
+  * [Supported Filters](build/onchain/jq-subset.md)
   * [Contract Addresses](build/onchain/contract-addresses.md)
 
 ## How it works?
