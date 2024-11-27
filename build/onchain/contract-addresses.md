@@ -19,3 +19,13 @@
 + [0xdD87E6F9BeC1c44bDe6C54BCf13F92287da935f8](https://sepolia.arbiscan.io/address/0xdD87E6F9BeC1c44bDe6C54BCf13F92287da935f8) `V1RequestRegistry`
 + [0xc4F7Eaa193749d612d04ac37446Ea5881F14Fc33](https://sepolia.arbiscan.io/address/0xc4F7Eaa193749d612d04ac37446Ea5881F14Fc33) `V1FeedRegistry`
 + [0x0576A551c9236B41E4Db585F35819140cAB4BAb9](https://sepolia.arbiscan.io/address/0x0576A551c9236B41E4Db585F35819140cAB4BAb9) `V1RequestLogic`
+
+### Celo Alfajores
+
+#### Chain Configuration
+[https://docs.celo.org/network](https://docs.celo.org/network)
+
+#### Contracts
++ [0xBC2D40C24A58Ec77E660F1780CEffC6aD1049430](https://celo-alfajores.blockscout.com/address/0xBC2D40C24A58Ec77E660F1780CEffC6aD1049430) `V1RequestRegistry`
++ [0x0576A551c9236B41E4Db585F35819140cAB4BAb9](https://celo-alfajores.blockscout.com/address/0x0576A551c9236B41E4Db585F35819140cAB4BAb9) `V1FeedRegistry`
++ [0x77C6094942E82fC77bBaeb7a3dBA1599b7Fbfa2C](https://celo-alfajores.blockscout.com/address/0x77C6094942E82fC77bBaeb7a3dBA1599b7Fbfa2C) `V1RequestLogic`
