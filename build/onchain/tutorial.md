@@ -1,17 +1,17 @@
 # Quex Data Oracle Tutorial
 
-Here we present step-by-step illustration on Quex data oracle usage. This tutorial passes through all the actions needed
+Here we present a step-by-step illustration of Quex data oracle usage. This tutorial passes through all the actions needed
 to create your own data feed on Quex Data Oracle query and use the data.
 
-For the sake of example we consider the part of dApp which collects and stores five best bids and five best asks on
+For the sake of example, we consider the part of dApp that collects and stores five best bids and five best asks on
 BTC-USDT pair on Binance together with their `lastUpdateId`. Normally you would not need the persistent storage of this
 data due to high gas consumption and corresponding transaction fees. You would rather make some aggregation and
 implement some decision logic with as few persistent storage as possible. However, this example is good in demonstrating
 most of Quex capabilities. Namely
-+ Complex HTTP query to a third party API
-+ Non-trivial result post-processing, including arithmetics, array mapping and selecting fields of JSON
++ Complex HTTP query to a third-party API
++ Non-trivial result post-processing, including arithmetics, array mapping, and selecting fields of JSON
 + Ability to receive the data on-chain as a ready-to-use user-defined structure without the hassle of reencoding,
-  repacking or introducing large argument lists
+  repacking, or introducing large argument lists
 
 ### Register the request on-chain
 
@@ -20,7 +20,7 @@ Clone the interfaces repository with the helper script to register the new reque
 git clone https://github.com/quex-tech/quex-v1-interfaces
 ```
 
-Cd to the directory with helper script
+Cd to the directory with the helper script
 ```bash
 cd quex-v1-interfaces/tools/create_feed
 ```
@@ -42,12 +42,12 @@ Edit the data feed description (`quex_feed.json`) to meet your desired request. 
 }
 ```
 The details on how these fields are constructed can be found [here](../post-processing/structs.md). Briefly, `request`
-has the structure of HTTP request to be made by an oracle, `pathch` is designated to contain the encrypted private
+has the structure of an HTTP request to be made by an oracle, `patch` is designated to contain the encrypted private
 fields of the request, `schema` is the type of the structure which is to be ABI-encoded and passed on-chain, `filter` is
 a `jq` filter, used to convert response JSON to `schema`. Quex uses the subset of jq language for
 post-processing. The list of supported operations can be found [here](./jq-subset.md).
 
-In `config.json` provide your RPC URL, address of Quex `FeedRegistry` contract and the path to the file with your
+In `config.json` provide your RPC URL, the address of Quex `FeedRegistry` contract, and the path to the file with your
 data feed description (`quex_feed.json`)
 ```json
 {
@@ -57,10 +57,10 @@ data feed description (`quex_feed.json`)
 }
 
 ```
-The address of `FeedRegistry` contract together with other user-facing contracts can be found
+The address of the `FeedRegistry` contract together with other user-facing contracts can be found
 [here](./contract-addresses.md).
 
-Prepare python virtual environment and install dependencies
+Prepare Python virtual environment and install dependencies
 ```bash
 python -m venv venv
 source ./venv/bin/activate
@@ -83,12 +83,12 @@ feed_id:       0x6279d8a0a0ae2db6a6ad495ec2b4c7dfc4b482cd3495035b4053e8dd8b359a6
 The most important field here is feed ID. Take a note of it
 
 You can see the corresponding transactions in the explorer. The parts of the data feed description are reusable. So, in case you will
-be registering new data feeds manually, you can reuse `request_id`, `patch_id`, `schema_id` and `filter_id` for new
+be registering new data feeds manually, you can reuse `request_id`, `patch_id`, `schema_id`, and `filter_id` for new
 data feeds without sending already recorded data on-chain.
 
 ### Create a Smart-Contract
 
-Create your contract which utilizes the data from the oracle. Here is an example for our particular case. Note that
+Create your contract which utilizes the data from the oracle. Here is an example of our particular case. Note that
 `FEED_ID` is taken as in the output of `create_feed.py`.
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -118,7 +118,7 @@ contract C {
     OrderBook[] orderBooks;
 
     constructor () {
-        // The requests will be made to QuexRequestRegistry contract
+        // The requests will be made to the QuexRequestRegistry contract
         quexRequests = IV1RequestRegistry(QUEX_REQUEST_REGISTRY_ADDRESS);
     }
 
@@ -153,8 +153,8 @@ contract C {
         // verify that the response is for the request created by ourselves
         require(receivedRequestId == requestId, "Unknown request ID");
 
-        // since we have recorded and verified request ID, verifying feed ID is not necessary in this particular case
-        // `value` field of DataItem contains ABI-encoded structure we requested
+        // since we have recorded and verified the request ID, verifying the feed ID is not necessary in this particular case
+        // `value` field of DataItem contains the ABI-encoded structure we requested
 
         // decode the data and process it (push to the array, for example)
         orderBooks.push(abi.decode(response.value, (OrderBook)));
@@ -176,11 +176,11 @@ Deploy your contract to the network where Quex data oracles exist. This particul
 
 ### Query Data
 
-Every time we wish to query the data, we can use `request` method of the contract above. It will pass the request to
+Every time we wish to query the data, we can use the `request` method of the contract above. It will pass the request to
 `QuexRequestRegistry` contract, and after the data is fetched and post-processed it will be returned to
 `processResponse` method. As `processResponse` can contain arbitrary logic, the `callbackGasLimit` must be passed to
 `request` which must account for the gas used by `processResponse`. Additionally, the amount of native coins not less
-than `tx.gasprice*callbackGasLimit` must be paid in `request` call to cover these gas expenses.
+than `tx.gasprice*callbackGasLimit` must be paid in the `request` call to cover these gas expenses.
 
 Do not worry about guessing the precise value of the gas price. The `QuexRequestRegistry` contract calculates the exact
 price and returns the change within the same transaction, so you can safely transfer a bit more than needed.
