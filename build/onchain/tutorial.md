@@ -88,7 +88,7 @@ data feeds without sending already recorded data on-chain.
 
 ### Create a Smart-Contract
 
-Create your contract which utilizes the data from the oracle. Here is an example of our particular case. Note that
+Create your contract which utilizes the data from the oracle. Here is an example for our particular case. Note that
 `FEED_ID` is taken as in the output of `create_feed.py`.
 ```solidity
 // SPDX-License-Identifier: MIT
