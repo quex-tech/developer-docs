@@ -94,7 +94,7 @@ Both elliptic curve points are encoded and uncompressed (prefixed with `0x04` by
 ## jqFilter
 
 `jqFilter` is the string representing the filter in the language `jq` to be applied to the response prior to data return. Quex Request
-Oracles support a subset of `jq`, which is described on the corresponding [page](https_pool/jq_subset.md)
+Oracles support a subset of `jq`, which is described on the corresponding [page](jq_subset.md)
 
 ## responseSchema
 

@@ -29,7 +29,7 @@
 
 * [Running Your Own Oracle Pool](provider/running_your_own_pool.md)
 * [TD Oracle Requirements](provider/td_oracle_requirements.md)
-* [Registering Your Trust Domain](providers/td_registration.md)
-* [Pool Creation](providers/pool_creation.md)
+* [Registering Your Trust Domain](provider/td_registration.md)
+* [Pool Creation](provider/pool_creation.md)
 
 * [Follow us!](community.md)
