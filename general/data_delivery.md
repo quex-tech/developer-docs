@@ -37,7 +37,7 @@ point, the oracle pool policies are checked, signature is verified, and the data
 
 ## Off-chain initiated data transfer
 
-This case is way simple, as the only method invoked on-chain is `pushData(OracleMessage memory message, ETHSignature
+This case is way simpler, as the only method invoked on-chain is `pushData(OracleMessage memory message, ETHSignature
 memory signature, uint256 flowId, uint256 tdId)`. Note that this method is again payable, and the attached value can be
 obtained via `getQuexFee(uint256 flowId)` method. The difference is that in this case the relaying party pays the Quex
 Fee, whereas in previous case the request initiating party paid, and the relayer was reimbursed for the gas spent.

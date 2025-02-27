@@ -10,6 +10,7 @@ Suppose the DApp collects the order books for BTC/USDT pair for its logic. It ne
 + The sequential number of the update to keep track of the ordering (Binance returns it as `lastUpdateId`)
 + Five best bids 
 + Five best asks
+
 Both bid and ask are required to be tuples of integer numbers (price, quantity). The precision is required to be 8th digit
 after decimal point. That is, the prices are to be multiplied by 100,000,000 and returned as `uint256`.
 
