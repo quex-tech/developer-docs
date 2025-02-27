@@ -66,8 +66,8 @@ contract C is Ownable {
         return requestId;
     }
 
-    // On request() call this contract may receive the change from Quex Core. Therefore, receive() method must be
-    // implemented
+    // On request() call this contract may receive the change from Quex Core.
+    // Therefore, receive() method must be implemented
     receive() external payable {
         payable(owner()).call{value: msg.value}("");
     }
@@ -76,7 +76,7 @@ contract C is Ownable {
     function processResponse(uint256 receivedRequestId, DataItem memory response, IdType idType) external {
         // Verify that the sender is indeed Quex
         require(msg.sender == QUEX_CORE, "Only Quex Proxy can push data");
-        // Veify that the request was initiated on-chain, rather than off-chain
+        // Verify that the request was initiated on-chain, rather than off-chain
         require(idType == IdType.RequestId, "Return type mismatch");
         // Verify that the response corresponds to our request
         require(receivedRequestId == requestId, "Unknown request ID");
@@ -101,7 +101,7 @@ contract C is Ownable {
 ## Register action
 
 According to the Quex architecture, the two things need to be done for data to be shipped. First, get the Action Id from
-the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS request to
+the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS requests to
 Binance open API. Since this action is quite specific, the pool does not know it in advance. So we need to register this action
 on the pool contract and get its id. If you are interested in the specifics of this process, consult the [Request Pool
 Description](../https_pool/https_pool.md). In this tutorial we use the helper tool to create both action and flow
@@ -165,7 +165,7 @@ is like
 ```
 Now, we need to let the oracle know how to convert this JSON file to solidity structs used by our contract. To do so,
 first define `responseSchema` as Solidity ABI schema for the `OrderBook` structure. Namely,
-`(uint256,(uint256,uint256)[5],(uint256,uint256)[5])`.  Now we need instruct the oracle to post-process response in a
+`(uint256,(uint256,uint256)[5],(uint256,uint256)[5])`.  Now we need to instruct the oracle to post-process response in a
 mixed-type array which can be cast to this type. Quex Request Oracle Pool uses a subset of [jq](https://jqlang.org)
 language for JSON post-processing. Jq programs are also called filters. We start building the filter step by step.
 1. To cast a number from string to desired format, `tonumber*100000000 | floor` can be used.
@@ -231,7 +231,7 @@ must have at least `110000` GWei in value. It is safe to round this value up, as
 ## Send request
 
 Once the value is estimated, the request can be created by calling `request` function on our contract with the value
-taken from the first step. This transaction submits the on-chain request that is captured by the pool relayer,
+taken from the first step. This transaction submits the on-chain request that is captured by the pool relayer, and
 transferred to the oracle in the pool. After the oracle completes the task, the post-processed data are relayed to Quex
 Core contract. Quex Core verifies the authority of the signing Trust Domain for this particular action, checks the
 signature, and sends the data to our callback.
