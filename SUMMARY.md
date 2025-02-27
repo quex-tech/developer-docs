@@ -2,28 +2,34 @@
 
 * [Quex oracles](readme.md)
 
-
-## Developers
-* [Building with Quex](build/readme.md)
-* [Retrieve data](build/retrieve-data.md)
-* [Post-Processing](build/post-processing/readme.md)
-  * [Extracting Integer Values](build/post-processing/extract-int.md)
-  * [Index Calculation](build/post-processing/calculate-index.md)
-  * [Complex Data Retrieval](build/post-processing/structs.md)
-* [Accessing Protected Data](build/private-patch.md)
-* [On-Chain Integration](build/onchain/readme.md)
-  * [General Workflow](build/onchain/general.md)
-  * [Quex Data Oracle Tutorial](build/onchain/tutorial.md)
-  * [Supported Filters](build/onchain/jq-subset.md)
-  * [Contract Addresses](build/onchain/contract-addresses.md)
-
 ## How it works?
 
 * [Why another oracle?](overview/why-another.md)
 * [Quex oracle security](overview/security.md)
 * [Onchain verification](overview/verification.md)
 
-## Become a data provider
+## General Information
 
-* [Join the Quex network](data-providers/launch-node.md)
+* [Where to Start](general/introduction.md)
+* [Quex Approach and Terminology](general/overview.md)
+* [Quex Data Delivery Modes](general/data_delivery.md)
+* [Smart Contract Addresses](genera/addresses.md)
+
+## Developers
+
+* [Building with Quex](consumer/readme.md)
+* [Getting Started Tutorial](consumer/getting_started.md)
+* [Client Callback Format](consumer/client_callback.md)
+* [Flow Creation](consumer/flow_creation.md)
+* [Request Oracle Pool](https_pool/readme.md)
+    * [Descriptive Guide](https_pool/https_pool.md)
+    * [Supported Post-Processing Operations](https_pool/jq_subset.md)
+
+## Data Providers
+
+* [Running Your Own Oracle Pool](provider/running_your_own_pool.md)
+* [TD Oracle Requirements](provider/td_oracle_requirements.md)
+* [Registering Your Trust Domain](providers/td_registration.md)
+* [Pool Creation](providers/pool_creation.md)
+
 * [Follow us!](community.md)
