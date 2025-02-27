@@ -102,7 +102,7 @@ contract C is Ownable {
 ## Register action
 
 According to the Quex architecture, the two things need to be done for data to be shipped. First, get the Action Id from
-the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS requests to
+the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS request to
 Binance open API. Since this action is quite specific, the pool does not know it in advance. So we need to register this action
 on the pool contract and get its id. If you are interested in the specifics of this process, consult the [Request Pool
 Description](../https_pool/https_pool.md). In this tutorial we use the helper tool to create both action and flow
