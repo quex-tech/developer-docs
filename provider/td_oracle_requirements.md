@@ -1,4 +1,4 @@
-# TD Oracle Requirements
+# TD oracle requirements
 
 It is recommended that your TD accepts the actions as byte arrays (maybe encoded). And it is mandatory that your TD
 outputs the data signed with the key which public counterpart is registered in the corresponding TD Quote.

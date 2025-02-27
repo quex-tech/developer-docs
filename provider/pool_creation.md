@@ -1,4 +1,4 @@
-# Pool Creation
+# Pool creation
 
 In case you are willing to create your own oracle pool utilizing Quex, the following interface must be implemented:
 ```solidity
@@ -18,12 +18,12 @@ The function must receive id of the Trust Domain registered with Quex Core and r
 Trust Domain has the authority to response to the pool actions. You can arrange the set of policies which fits your pool
 model best. Consider few examples
 
-### TD Whitelist
+### TD whitelist
 
 In this scenario, the pool explicitly enumerates the Trust Domains, which can participate in it. This is the simplest
 use case (and often the most adequate one) which corresponds to the fully private oracle pools
 
-### Fixed Payload TDs
+### Fixed payload TDs
 
 In this scenario, you may wish to provide the right of response to any Trust Domain, given that they run exactly the same
 software. For this purpose, the `isInPool` function can query `getTD(uint256 tdId)` method of Quex Core receiving the TD Quote for the

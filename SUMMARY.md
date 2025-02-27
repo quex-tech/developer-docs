@@ -8,28 +8,28 @@
 * [Quex oracle security](overview/security.md)
 * [Onchain verification](overview/verification.md)
 
-## General Information
+## General information
 
-* [Where to Start](general/introduction.md)
-* [Quex Approach and Terminology](general/overview.md)
-* [Quex Data Delivery Modes](general/data_delivery.md)
-* [Smart Contract Addresses](general/addresses.md)
+* [Where to start](general/introduction.md)
+* [Quex approach and terminology](general/overview.md)
+* [Quex data Delivery modes](general/data_delivery.md)
+* [Smart contract addresses](general/addresses.md)
 
 ## Developers
 
 * [Building with Quex](consumer/readme.md)
-* [Getting Started Tutorial](consumer/getting_started.md)
-* [Client Callback Format](consumer/client_callback.md)
-* [Flow Creation](consumer/flow_creation.md)
-* [Request Oracle Pool](https_pool/readme.md)
-    * [Descriptive Guide](https_pool/https_pool.md)
-    * [Supported Post-Processing Operations](https_pool/jq_subset.md)
+* [Getting started tutorial](consumer/getting_started.md)
+* [Client callback format](consumer/client_callback.md)
+* [Flow creation](consumer/flow_creation.md)
+* [Request oracle pool](https_pool/readme.md)
+    * [Descriptive guide](https_pool/https_pool.md)
+    * [Supported post-processing operations](https_pool/jq_subset.md)
 
-## Data Providers
+## Data providers
 
-* [Running Your Own Oracle Pool](provider/running_your_own_pool.md)
-* [TD Oracle Requirements](provider/td_oracle_requirements.md)
-* [Registering Your Trust Domain](provider/td_registration.md)
-* [Pool Creation](provider/pool_creation.md)
+* [Running your own oracle pool](provider/running_your_own_pool.md)
+* [TD oracle requirements](provider/td_oracle_requirements.md)
+* [Registering your Trust Domain](provider/td_registration.md)
+* [Pool creation](provider/pool_creation.md)
 
 * [Follow us!](community.md)

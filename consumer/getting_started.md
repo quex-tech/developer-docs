@@ -1,6 +1,6 @@
-# Getting Started with Quex
+# Getting started with Quex
 
-## Project Overview
+## Project overview
 
 In this tutorial we are creating a DApp on Arbitrum Sepolia, which consumes the data from Binance public API. To see the
 basic capabilities, we are also going to use the post-processing of the data on the Quex Data Oracle Side making a
@@ -13,7 +13,7 @@ Suppose the DApp collects the order books for BTC/USDT pair for its logic. It ne
 Both bid and ask are required to be tuples of integer numbers (price, quantity). The precision is required to be 8th digit
 after decimal point. That is, the prices are to be multiplied by 100,000,000 and returned as `uint256`.
 
-## Design the Data Structures
+## Design the data structures
 
 In line with the problem statement, our contract will work with the following data structures:
 ```solidity
@@ -29,7 +29,7 @@ struct OrderBook {
 }
 ```
 
-## Deploy Receiving Contract
+## Deploy receiving contract
 
 Here is an example of a simple contract keeping track of the last created request and storing the response data.
 
@@ -98,7 +98,7 @@ contract C is Ownable {
 }
 ```
 
-## Register Action
+## Register action
 
 According to the Quex architecture, the two things need to be done for data to be shipped. First, get the Action Id from
 the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS request to
@@ -107,7 +107,7 @@ on the pool contract and get its id. If you are interested in the specifics of t
 Description](../https_pool/https_pool.md). In this tutorial we use the helper tool to create both action and flow
 simultaneously, so let us go through the idea behind the flow creation first.
 
-## Create Flow
+## Create flow
 
 After the action id is known, it is time to define the route of data delivery. That is, to tell Quex Core what oracle
 pool is the data supplier, what action is expected to be performed by it for the particular demand, what is the address
@@ -118,9 +118,9 @@ passing the specific details every time. For the structures involved, please con
 To save time on these contract interactions, we will use the [Flow Creation
 Tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/create_flow). So, let us pass to this part
 
-## Using Flow Creation Script
+## Use flow creation script
 
-### Configure Settings
+### Configure settings
 First, edit `config.json`. Compare the addresses of oracle pool and Quex Core with the ones you can find
 [here](../general/addresses). Verify that `rpc_url` indeed points to Arbitrum Sepolia RPC. We can see from Remix IDE
 that gas limit of 700k should be more than enough for `processResponse` call. The value of `td_pubkey` can be found
@@ -131,7 +131,7 @@ does not matter.
 Make sure that `consumer` points to your contract, and the callback selector points to your method. If you use Remix
 IDE, you can find the selectors in `Solidity Compiler->Compilation Details->Function Hashes`.
 
-### Configure Request
+### Configure request
 
 Now, we edit `request.json`. It defines the structure that will be passed to `addAction` call. The `request` field has
 the general structure of HTTP request that will be performed by the oracle. However, there is also similarly looking
@@ -209,7 +209,7 @@ Combining it all together, the `request.json` file may now look as follows:
 
 Note that we did not include any patch as we do not need the private data in this particular case.
 
-### Run the Flow Creation Script
+### Run the flow creation script
 
 In order to initiate the transactions, the script needs access to the secret key. It is easiest to pass it as an
 environment variable. However, you can also add it to `.env` or to `config.json` (see readme for the script)
@@ -220,7 +220,7 @@ SECRET_KEY=deadbeef... python create_flow.py config.json
 The script will output the id of registered action; flow id, the fee per request in native coins, and the amount of gas
 to be covered per request.
 
-## Estimate Fee
+## Estimate fee
 
 In our case, the tool has already shown the fee values. However, if we needed to access them from other project, we
 could use `getRequestFee(uint256 flowId)` method of the Quex Core which returns this tuple. The value which must be
@@ -228,7 +228,7 @@ attached to the transaction is `nativeFee + gasPrice*gas`. Suppose, the call ret
 `nativeFee` and `810000` as gas. Suppose also that gas price is 0.1 GWei That means, the request creating transaction
 must have at least `110000` GWei in value. It is safe to round this value up, as Quex Core returns the change.
 
-## Send Request
+## Send request
 
 Once the value is estimated, the request can be created by calling `request` function on our contract with the value
 taken from the first step. This transaction submits the on-chain request that is captured by the pool relayer,
@@ -236,6 +236,6 @@ transferred to the oracle in the pool. After the oracle completes the task, the 
 Core contract. Quex Core verifies the authority of the signing Trust Domain for this particular action, checks the
 signature, and sends the data to our callback.
 
-## Check the Result
+## Check the result
 
 Check out your view functions to see that order books are indeed delivered.

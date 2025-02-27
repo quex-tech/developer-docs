@@ -1,4 +1,4 @@
-# Supported Filters
+# Supported filters
 
 Quex Request Oracles support the subset of [jq](https://jqlang.github.io/jq/manual/) language for response post-processing. The supported operations are
 

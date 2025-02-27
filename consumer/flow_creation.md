@@ -1,4 +1,4 @@
-# Flow Creation
+# Flow creation
 
 The data flow corresponds to the route the specific action takes from the pool to the data consumer contract. In Quex,
 the general flow structure is the following

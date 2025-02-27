@@ -1,6 +1,6 @@
-# Quex Request Oracle Pool Descriptive Guide
+# Quex request oracle pool descriptive guide
 
-## Pool Actions
+## Pool actions
 
 The actions of this pool represent the combination of the public part of the
 request, its private encrypted part, post-processing filter and ABI schema for the post-processed result:

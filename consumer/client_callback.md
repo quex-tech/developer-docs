@@ -1,4 +1,4 @@
-# Data Consumer Callback
+# Data consumer callback
 
 The callback for data consuming contract must have the following type signature (the method name can be arbitrary)
 ```solidity

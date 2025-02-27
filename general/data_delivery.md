@@ -1,4 +1,4 @@
-# Data Delivery Modes
+# Data delivery modes
 
 Quex Core supports two mechanisms of data delivery:
 + On-chain initiated (request-based)
@@ -18,7 +18,7 @@ enum IdType {
 the callback is the request id. `IdType` of `FlowId` means that the data was delivered as a result of the off-chain
 initiation, and delivered solely by flow id (which is passed to the callback as an id in this case).
 
-## On-Chain Initiated Data Transfer
+## On-Chain initiated data transfer
 
 Having the flow registered, the on-chain data request is created by calling `createRequest(uint256 flowId)` on Quex
 Core. Note that this function is payable, and the value of native coins must be attached to it. This value consists of
@@ -35,7 +35,7 @@ Once the request is created, it is transferred to on oracle. The signed oracle r
 `fulfillRequest(OracleMessage memory message, ETHSignature memory signature, uint256 requestId, uint256 tdId)`. At this
 point, the oracle pool policies are checked, signature is verified, and the data is dispatched to the consumer callback.
 
-## Off-Chain Initiated Data Transfer
+## Off-chain initiated data transfer
 
 This case is way simples, as the only method invoked on-chain is `pushData(OracleMessage memory message, ETHSignature
 memory signature, uint256 flowId, uint256 tdId)`. Note that this method is again payable, and the attached value can be
