@@ -12,7 +12,7 @@
 
 * [Where to start](general/introduction.md)
 * [Quex approach and terminology](general/overview.md)
-* [Quex data Delivery modes](general/data_delivery.md)
+* [Quex data delivery modes](general/data_delivery.md)
 * [Smart contract addresses](general/addresses.md)
 
 ## Developers
