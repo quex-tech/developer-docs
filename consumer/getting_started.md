@@ -136,10 +136,10 @@ Tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/create_f
 
 ### Configure settings
 First, edit `config.json`. Compare the addresses of oracle pool and Quex Core with the ones you can find
-[here](../general/addresses). Verify that `rpc_url` indeed points to Arbitrum Sepolia RPC. We can see from Remix IDE
+[here](../general/addresses.md). Verify that `rpc_url` indeed points to Arbitrum Sepolia RPC. We can see from Remix IDE
 that gas limit of 700k should be more than enough for `processResponse` call. The value of `td_pubkey` can be found
-either in our Core Contract (see [`ITrustDomainRegistry`](../provider/td_registration), `REPORT_DATA` field of the TD
-Quote), or on [addresses](../general/addresses) page. In case your request will not have private data, the `td_pubkey`
+either in our Core Contract (see [`ITrustDomainRegistry`](../provider/td_registration.md), `REPORT_DATA` field of the TD
+Quote), or on [addresses](../general/addresses.md) page. In case your request will not have private data, the `td_pubkey`
 does not matter.
 
 Make sure that `consumer` points to your contract, and the callback selector points to your method. If you use Remix
