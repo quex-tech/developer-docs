@@ -33,7 +33,7 @@ To provide flexibility and fault tolerance, the oracles are united in **Oracle P
 they can perform. When the end user needs some data, they address the command to the Oracle Pool. Any oracle from the
 pool can execute the command, and the signed result is shipped to the chain. Quex Core on-chain logic verifies the
 signature, checks the permissions of the responding oracle, and delivers the result to the customer-defined receiving
-smart-contract.
+smart contract.
 
 For common scenarios the action ID, the oracle pool ID, and the receiver address are reused multiple times. To
 simplify the usage and reduce the fees in the long run, Quex uses **data flows**. A data flow is a combination of
