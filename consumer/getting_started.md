@@ -217,7 +217,7 @@ Combining it all together, the `request.json` file may now look as follows:
         ]
     },
     "jqFilter": "[.lastUpdateId]+([.bids,.asks]|map(map(map(tonumber*100000000|floor))))",
-    "responseSchema": "(uint256,(uint256,uint256)[5],(uint256,uint256)[5])",
+    "responseSchema": "(uint256,(uint256,uint256)[5],(uint256,uint256)[5])"
 }
 ```
 
