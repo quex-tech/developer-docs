@@ -12,8 +12,9 @@ struct OracleMessage {
 }
 ```
 
-Here `actionId` is the action Id assigned to the action by your pool. It must be reproducible from within your TD, and
-`DataItem` is specified as
+Here `actionId` is the action Id assigned to the action by your pool. Note, that it is the responsibility of you as the
+TD provider to make sure that the `actionId` under signature corresponds to the actual action being performed. The
+action Id must correspond to the one defined in your [oracle pool](pool_creation.md). `DataItem` struct member is specified as
 
 ```solidity
 struct DataItem {

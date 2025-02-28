@@ -99,6 +99,19 @@ contract C is Ownable {
 }
 ```
 
+As we are passing the arrays of nested structures, we need to compile the contract with the intermediate representation.
+For example, if you are using [Remix IDE](https://remix.ethereum.org/), go to compiler settings, enable `Use Configuration File` 
+in the `Advanced configurations`, and add `"viaIR": true` to your `compiler_config.json`:
+```
+{
+	"language": "Solidity",
+	"settings": {
+		"viaIR": true,
+        ...
+	}
+}
+```
+
 ## Register action
 
 According to the Quex architecture, the two things need to be done for data to be shipped. First, get the Action Id from
