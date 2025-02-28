@@ -236,7 +236,8 @@ to be covered per request.
 
 ## Estimate fee
 
-In our case, the tool has already shown the fee values. However, if we needed to access them from other project, we
+In our case, the tool has already shown the fee values (constituent in native currency and another constituent in gas). 
+However, if we needed to access them from other project, we
 could use `getRequestFee(uint256 flowId)` method of the Quex Core which returns this tuple. The value which must be
 attached to the transaction is `nativeFee + gasPrice*gas`. Suppose, the call returned `30000000000000` Wei as
 `nativeFee` and `810000` as gas. Suppose also that gas price is 0.1 GWei That means, the request creating transaction
