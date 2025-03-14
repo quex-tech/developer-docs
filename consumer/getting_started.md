@@ -1,256 +1,214 @@
-# Getting started with Quex
+# Getting Started with Quex
 
-## Project overview
+# Introduction
 
-In this tutorial we are creating a DApp on Arbitrum Sepolia, which consumes the data from Binance public API. To see the
-basic capabilities, we are also going to use the post-processing of the data on the Quex Data Oracle Side making a
-simple script (or filter in `jq` terms) for this purpose, and illustrate the non-trivial return structure.
+Quex provides a protocol and infrastructure for decentralized data transfer based on confidential computing. One of its most straightforward use cases for developers is building data oracles, which we’ll explore in this guide.
+We’ll conceptualize, understand, and build a basic parametric emission token. Through this example, you'll learn how to use Quex to access verifiable data on-chain.
 
-Suppose the DApp collects the order books for BTC/USDT pair for its logic. It needs the following data from Binance:
-+ The sequential number of the update to keep track of the ordering (Binance returns it as `lastUpdateId`)
-+ Five best bids 
-+ Five best asks
 
-Both bid and ask are required to be tuples of integer numbers (price, quantity). The precision is required to be 8th digit
-after decimal point. That is, the prices are to be multiplied by 100,000,000 and returned as `uint256`.
+## What Are We Building?
 
-## Design the data structures
+Let’s begin by clearly defining what we’re building and why. Imagine you’re issuing a token for a DeFi protocol and want to design tokenomics that incentivize the foundation to actively increase the protocol’s Total Value Locked (TVL). One effective approach is awarding the foundation tokens proportional to the protocol's TVL, as reported by [DeFiLlama](https://defillama.com).
 
-In line with the problem statement, our contract will work with the following data structures:
+Specifically, we’ll create a system where the foundation receives freshly minted tokens each day, equal in number to the total USD-denominated TVL of the protocol across all supported chains. For clarity and practical demonstration, we'll use the TVL data from the [DyDx protocol](https://defillama.com/protocol/dydx). Fortunately, DeFiLlama provides an [API endpoint](https://api.llama.fi/tvl/dydx) that returns exactly this metric.
+
+## Document structure
+!! TODO
+
+Here’s a polished Markdown version of your “Try it out” section, maintaining your original style and meaning closely:
+
+# Try it Out
+
+The codebase for this example, including a prepared Foundry environment, is available in [our examples repository](https://github.com/quex-tech/quex-v1-examples). You can easily explore it by cloning the repository and installing its dependencies:
+
+```shell
+git clone https://github.com/quex-tech/quex-v1-examples
+cd quex-v1-examples/tvl-emission
+forge install
+```
+
+This repository also provides scripts that help you deploy the contracts and make requests to the Quex data oracle, triggering token minting. To deploy these contracts, you’ll need the private key of a wallet holding sufficient gas tokens for your chosen network. Set your private key as an environment variable for convenience:
+
+```shell
+export SECRET=<0xYourPrivateKey>
+```
+
+## Build and Deploy Contracts
+
+Run the DeployTVLEmissionScript to build and deploy the ERC-20 token, the token emission contract, and to set up the data flow for verifiable Quex HTTPS responses:
+
+```shell
+forge script script/DeployTVLEmissionScript.s.sol --broadcast
+```
+
+You’ll need the deployed contract address (0x48E5...E38CA as an example) for making requests. Store the deployed contract’s address as an environment variable:
+
+```shell
+export CONTRACT_ADDRESS=<DEPLOYED_CONTRACT_ADDRESS>
+```
+
+## Make a Request
+
+Next, make a request using the provided script:
+
+```shell
+forge script script/Request.s.sol --broadcast
+```
+
+## Check Your Balance
+
+After a short waiting period, verify your wallet balance—you should receive freshly minted TVLT tokens, equal in amount to the current TVL of the DyDx protocol!
+
+Congratulations! You've successfully deployed your first contract that relies on confidential computing proofs to bring off-chain data to your contract. In the following sections, we'll provide a detailed explanation of what's happening under the hood of our contracts. This will give you insights and ideas for building your own Quex-based smart contracts.
+
+# Let’s Create a Quex-based Contract!
+
+## Prepare Environment
+
+We'll build our example using [Foundry](https://book.getfoundry.sh) (Forge)—ensure it's correctly installed and up to date. Update Foundry by running:
+
+```shell
+foundryup
+```
+
+We’ll also use the ERC-20 implementation from OpenZeppelin and Quex libraries to simplify our development:
+
+```shell
+forge install openzeppelin/openzeppelin-contracts
+forge install quex-tech/quex-v1-interfaces
+```
+!! TODO - Request manager
+
+## Token emission
+
+Next, let's create a new contract `ParametricToken.sol` in src folder with the following code:
+
 ```solidity
-struct Order {
-    uint256 price;
-    uint256 quantity;
-}
+pragma solidity ^0.8.22;
 
-struct OrderBook {
-    uint256 lastUpdateId;
-    Order[5] bids;
-    Order[5] asks;
+import "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-contracts/contracts/access/Ownable.sol";
+
+contract ParametricToken is ERC20, Ownable {
+    constructor() ERC20("Parametric Emission Token", "TVLT") Ownable(msg.sender) {}
+
+    function mint(address to, uint256 amount) external onlyOwner {
+        _mint(to, amount);
+    }
 }
 ```
 
-## Deploy receiving contract
+As you can see, this is a standard ERC-20 token with one modification: only the contract owner can mint new tokens. In our scenario, ownership of this token contract will belong to another contract.
 
-Here is an example of a simple contract keeping track of the last created request and storing the response data.
+Let’s create that contract, `TVLEmission.sol`, next:
 
 ```solidity
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.22;
+pragma solidity ^0.8.22;
 
-// Import IQuexActionRegistry interface and DataItem structure
-import "https://github.com/quex-tech/quex-v1-interfaces/blob/fad2ceb5bff350b1eece52bdb74a2e01984f333e/interfaces/core/IQuexActionRegistry.sol";
-import "@openzeppelin/contracts@4.5.0/access/Ownable.sol";
+import "./ParametricToken.sol";
+import "./lib/QuexRequestManager.sol";
+import "quex-v1-interfaces/interfaces/oracles/IRequestOraclePool.sol";
+import "quex-v1-interfaces/interfaces/core/IFlowRegistry.sol";
 
-address constant QUEX_CORE = 0xD8a37e96117816D43949e72B90F73061A868b387;
-IQuexActionRegistry constant quexCore = IQuexActionRegistry(QUEX_CORE);
+contract TVLEmission is QuexRequestManager {
+    address private _quexCore;
+    address private _oraclePool;
+    address private _treasuryAddress;
+    ParametricToken public parametricToken;
+    uint256 public lastRequestTime;
+    uint256 private constant REQUEST_COOLDOWN = 1 days;
 
-struct Order {
-    uint256 price;
-    uint256 quantity;
-}
-
-struct OrderBook {
-    uint256 lastUpdateId;
-    Order[5] bids;
-    Order[5] asks;
-}
-
-contract C is Ownable {
-    uint256 requestId;
-    OrderBook[] orderBooks;
-
-    // We will track the requests performed by the unique request Id assigned by Quex
-    // Only keep the latest request Id
-    function request(uint256 flowId) public payable onlyOwner returns(uint256) {
-        requestId = quexCore.createRequest{value:msg.value}(flowId);
-        return requestId;
+    constructor(address treasuryAddress, address quexCore, address oraclePool) QuexRequestManager(quexCore) {
+        parametricToken = new ParametricToken();
+        _treasuryAddress = treasuryAddress;
+        _quexCore = quexCore;
+        _oraclePool = oraclePool;
     }
 
-    // On request() call this contract may receive the change from Quex Core.
-    // Therefore, receive() method must be implemented
-    receive() external payable {
-        payable(owner()).call{value: msg.value}("");
-    }
-
-    // Callback handling the data processing logic
-    function processResponse(uint256 receivedRequestId, DataItem memory response, IdType idType) external {
-        // Verify that the sender is indeed Quex
-        require(msg.sender == QUEX_CORE, "Only Quex Proxy can push data");
-        // Verify that the request was initiated on-chain, rather than off-chain
-        require(idType == IdType.RequestId, "Return type mismatch");
-        // Verify that the response corresponds to our request
-        require(receivedRequestId == requestId, "Unknown request ID");
-        // Use the data. In this case we just store them
-        orderBooks.push(abi.decode(response.value, (OrderBook)));
-        return;
-    }
-
-    // Simple view function to see the results
-    function getOrderBooks() external view returns (OrderBook[] memory) {
-        return orderBooks;
-    }
-
-    // Another convenience view
-    function getLastBid() external view returns (Order memory) {
-        require(orderBooks.length >= 1, "No order books recorded");
-        return orderBooks[orderBooks.length - 1].bids[0];
+    function processResponse(uint256 receivedRequestId, DataItem memory response, IdType idType)
+    external verifyResponse(receivedRequestId, idType)
+    {
+        require(block.timestamp >= lastRequestTime + REQUEST_COOLDOWN, "Request cooldown active");
+        uint256 lastTVL = abi.decode(response.value, (uint256));
+        parametricToken.mint(_treasuryAddress, lastTVL);
+        lastRequestTime = block.timestamp;
     }
 }
 ```
 
-As we are passing the arrays of nested structures, we need to compile the contract with the intermediate representation.
-For example, if you are using [Remix IDE](https://remix.ethereum.org/), go to compiler settings, enable `Use Configuration File` 
-in the `Advanced configurations`, and add `"viaIR": true` to your `compiler_config.json`:
-```
-{
-	"language": "Solidity",
-	"settings": {
-		"viaIR": true,
+Let’s briefly summarize what’s happening here:
+- The contract imports and inherits from `QuexRequestManager`, which simplifies interactions with Quex oracle pools and performs the necessary response verification.
+- The constructor is initialized with addresses for the token treasury, Quex core, and [HTTPs oracle pool](../https_pool/https_pool.md).
+- The `processResponse` method is implemented as a callback, which securely processes responses from the Quex oracle. It includes a cooldown period to limit request frequency and uses the `verifyResponse` modifier to protect against oracle manipulation attacks.
+
+At this point, we should make a side note regarding Quex architecture. Although Quex supports classic pull- and push-based data oracles, under the hood, all of them rely on callback mechanics. In our example, we use the fastest and most cost-efficient callback scenario, particularly useful when you need to process data directly upon receiving it.
+
+However, though we've defined a function to process responses and verify proofs, we haven't yet defined the data flow—the exact HTTPS request the oracle pool should perform and the necessary supporting information. We'll cover this in the next section.
+
+## Create Flow
+
+In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract.
+
+To achieve this, create a `generateFlow()` function as follows and invoke it from the constructor:
+
+```solidity
+contract TVLEmission is QuexRequestManager {
+    constructor(address treasuryAddress, address quexCore, address oraclePool) QuexRequestManager(quexCore) {
         ...
-	}
+        generateFlow();
+    }
+
+    function generateFlow() private onlyOwner {
+        IRequestOraclePool oraclePool = IRequestOraclePool(_oraclePool);
+        IFlowRegistry flowRegistry = IFlowRegistry(_quexCore);
+
+        HTTPRequest memory request = HTTPRequest({
+            method: RequestMethod.Get,
+            host: "api.llama.fi",
+            path: "/tvl/dydx",
+            headers: new RequestHeader[](0),
+            parameters: new QueryParameter[](0),
+            body: ""
+        });
+        bytes32 requestId = oraclePool.addRequest(request);
+        bytes32 filterId = oraclePool.addJqFilter(". * 1000000000000000000 | round");
+        bytes32 schemaId = oraclePool.addResponseSchema("uint256");
+        bytes32 patchId = 0;
+        uint256 actionId = oraclePool.addActionByParts(requestId, patchId, schemaId, filterId);
+        Flow memory flow = Flow({
+            gasLimit: 700000,
+            actionId: actionId,
+            pool: _oraclePool,
+            consumer: address(this),
+            callback: this.processResponse.selector
+        });
+        uint256 flowId = flowRegistry.createFlow(flow);
+        setFlowId(flowId);
+    }
+    
+    ...
 }
 ```
 
-## Register action
+Let's go through the `generateFlow()` method step by step. First, we define the [HTTPS request](../https_pool/https_pool.md#httprequest) we’d like to perform—in our case, it's [https://api.llama.fi/tvl/dydx](https://api.llama.fi/tvl/dydx), which returns the USD-denominated TVL of the DyDx protocol as required for our task. Note that while our example is simple, Quex supports more advanced requests: you may specify headers, parameters, the HTTP method, and request body, if needed. These additional fields provide flexibility when working with more complex APIs.
 
-According to the Quex architecture, the two things need to be done for data to be shipped. First, get the Action Id from
-the oracle pool. In our case, the pool is the Quex Request Pool. The action must consist in performing HTTPS request to
-Binance open API. Since this action is quite specific, the pool does not know it in advance. So we need to register this action
-on the pool contract and get its id. If you are interested in the specifics of this process, consult the [Request Pool
-Description](../https_pool/https_pool.md). In this tutorial we use the helper tool to create both action and flow
-simultaneously, so let us go through the idea behind the flow creation first.
 
-## Create flow
+Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script written in the [jq](https://jqlang.org) programming language—for response post-processing. The DeFiLlama API from the previous step returns a floating-point number, e.g., `284291310.4518468`. However, standard ERC20 tokens follow a convention where token amounts are represented as integers, scaled by 10<sup>18</sup>. To achieve this, the jq script `"284291310.4518468 | round"` multiplies the response by 10<sup>18</sup> and rounds it to an integer.
 
-After the action id is known, it is time to define the route of data delivery. That is, to tell Quex Core what oracle
-pool is the data supplier, what action is expected to be performed by it for the particular demand, what is the address
-of the data consumer (including callback selector), and what gas consumption to expect from the callback (for relayer
-reimbursement). As a result, we will get flow id which can be used for making requests and pushing the data without
-passing the specific details every time. For the structures involved, please consult [Flow Creation](flow_creation.md).
+Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed.
 
-To save time on these contract interactions, we will use the [Flow Creation
-Tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/create_flow). So, let us pass to this part
+Fourth, there's a step to define a [private patch](../https_pool/https_pool.md#httpprivatepatch)—a field containing private data that will be included in the request within the TD in encrypted form. This is particularly useful for attaching API keys or security tokens to your requests. However, since our current example doesn't require any private data, we simply set the patch ID to zero: `bytes32 patchId = 0`.
 
-## Use flow creation script
+Finally, we need to define what happens when the response is ready. We do this using three fields: the oracle pool's address (`consumer`), the callback function (`callback`) to handle the incoming data, and a `gasLimit` for executing the callback. After defining these parameters, we call `createFlow()` to register our flow in the Quex registry, and store the returned identifier via `setFlowId()` for verifying incoming data later.
 
-### Configure settings
-First, edit `config.json`. Compare the addresses of oracle pool and Quex Core with the ones you can find
-[here](../general/addresses.md). Verify that `rpc_url` indeed points to Arbitrum Sepolia RPC. We can see from Remix IDE
-that gas limit of 700k should be more than enough for `processResponse` call. The value of `td_pubkey` can be found
-either in our Core Contract (see [`ITrustDomainRegistry`](../provider/td_registration.md), `REPORT_DATA` field of the TD
-Quote), or on [addresses](../general/addresses.md) page. In case your request will not have private data, the `td_pubkey`
-does not matter.
+## Deploy and Run
 
-Make sure that `consumer` points to your contract, and the callback selector points to your method. If you use Remix
-IDE, you can find the selectors in `Solidity Compiler->Compilation Details->Function Hashes`.
+Congratulations, you've just created your first contract using off-chain data secured by confidential computing proofs!
 
-### Configure request
+Now, all you need is to deploy the `TVLEmission` contract and call the built-in `request()` method to fetch your data and mint tokens. You can do this using any tools you prefer—particularly, you may use our prepared Foundry scripts available in the [examples repository](https://github.com/quex-tech/quex-v1-examples/tree/main/tvl-emission).
 
-Now, we edit `request.json`. It defines the structure that will be passed to `addAction` call. The `request` field has
-the general structure of HTTP request that will be performed by the oracle. However, there is also similarly looking
-`patch` field. This field contains the private data which will be added to the request inside the TD. The TD accepts it
-in encrypted form. Why is it in plaintext here then? The flow creation script encrypts it prior to sending using the
-`td_pubkey` previously specified in the config. The `pathSuffix` is concatenated to the path in the `request`, the
-headers and parameters are added to those of `request`, the body in `patch`. In case the body in `patch` is non-empty,
-it will replace the `body` from the `request`.
 
-The query we are tailoring accesses the host `www.binance.com`, path `/api/v3/depth`, has header `Content-Type:
-application/json`, and parameters `limit=5` and `symbol=BTCUSDT`. If one tries this query, the response from Binance API
-is like
-```
-{
-  "lastUpdateId": 62019703469,
-  "bids": [
-    [
-      "86319.98000000",
-      "2.90207000"
-    ],
-  ...
-  ],
-  "asks": [
-    [
-      "86319.99000000",
-      "0.58125000"
-    ],
-  ...
-  ]
-}
-```
-Now, we need to let the oracle know how to convert this JSON file to solidity structs used by our contract. To do so,
-first define `responseSchema` as Solidity ABI schema for the `OrderBook` structure. Namely,
-`(uint256,(uint256,uint256)[5],(uint256,uint256)[5])`.  Now we need to instruct the oracle to post-process response in a
-mixed-type array which can be cast to this type. Quex Request Oracle Pool uses a subset of [jq](https://jqlang.org)
-language for JSON post-processing. Jq programs are also called filters. We start building the filter step by step.
-1. To cast a number from string to desired format, `tonumber*100000000 | floor` can be used.
-2. Now, the filter `.bids[0] | map(tonumber*100000000 | floor)` would yield the first bid converted to the
-right format
-3. To convert all the bids to the necessary format, apply this map as nested: `.bids | map(map(tonumber*100000000 | floor))`
-4. To reuse this filter for asks, process bids and asks as an array:
-`[.bids, .asks] | map(map(map(tonumber*100000000 | floor)))`. Now we have two arrays adhering to the encoding.
-5. Finally, prepend it with the value of `lastUpdateId`:
-`[.lastUpdateId] + ([.bids, .asks] | map(map(map(tonumber*100000000|floor))))`
+## Next Steps
 
-Combining it all together, the `request.json` file may now look as follows:
-```json
-{
-    "request": {
-        "method": "GET",
-        "host": "www.binance.com",
-        "path": "/api/v3/depth",
-        "headers": [
-            {
-                "key": "Content-Type",
-                "value": "application/json"
-            }
-        ],
-        "body": "",
-        "parameters": [
-            {
-                "key": "limit",
-                "value": "5"
-            },
-            {
-                "key": "symbol",
-                "value": "BTCUSDT"
-            }
-        ]
-    },
-    "jqFilter": "[.lastUpdateId]+([.bids,.asks]|map(map(map(tonumber*100000000|floor))))",
-    "responseSchema": "(uint256,(uint256,uint256)[5],(uint256,uint256)[5])"
-}
-```
-
-Note that we did not include any patch as we do not need the private data in this particular case.
-
-### Run the flow creation script
-
-In order to initiate the transactions, the script needs access to the secret key. It is easiest to pass it as an
-environment variable. However, you can also add it to `.env` or to `config.json` (see readme for the script)
-```bash
-SECRET_KEY=deadbeef... python create_flow.py config.json
-```
-
-The script will output the id of registered action; flow id, the fee per request in native coins, and the amount of gas
-to be covered per request.
-
-## Estimate fee
-
-In our case, the tool has already shown the fee values (constituent in native currency and another constituent in gas). 
-However, if we needed to access them from other project, we
-could use `getRequestFee(uint256 flowId)` method of the Quex Core which returns this tuple. The value which must be
-attached to the transaction is `nativeFee + gasPrice*gas`. Suppose, the call returned `30000000000000` Wei as
-`nativeFee` and `810000` as gas. Suppose also that gas price is 0.1 GWei That means, the request creating transaction
-must have at least `110000` GWei in value. It is safe to round this value up, as Quex Core returns the change.
-
-## Send request
-
-Once the value is estimated, the request can be created by calling `request` function on our contract with the value
-taken from the first step. This transaction submits the on-chain request that is captured by the pool relayer, and
-transferred to the oracle in the pool. After the oracle completes the task, the post-processed data are relayed to Quex
-Core contract. Quex Core verifies the authority of the signing Trust Domain for this particular action, checks the
-signature, and sends the data to our callback.
-
-## Check the result
-
-Check out your view functions to see that order books are indeed delivered.
+Congratulations on building your very first hook! You could explore further by going to Hook Deployment to learn about how hook flags work and see how we will deploy a hook in action.
