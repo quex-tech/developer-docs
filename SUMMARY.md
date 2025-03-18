@@ -18,7 +18,7 @@
 ## Developers
 
 * [Building with Quex](consumer/readme.md)
-* [Getting started tutorial](consumer/getting_started.md)
+* [Getting started tutorial](consumer/getting_started2.md)
 * [Client callback format](consumer/client_callback.md)
 * [Flow creation](consumer/flow_creation.md)
 * [Request oracle pool](https_pool/readme.md)
