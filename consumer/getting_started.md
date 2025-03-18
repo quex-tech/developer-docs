@@ -2,20 +2,27 @@
 
 # Introduction
 
-Quex provides a protocol and infrastructure for decentralized data transfer based on confidential computing. One of its most straightforward use cases for developers is building data oracles, which we’ll explore in this guide.
-We’ll conceptualize, understand, and build a basic parametric emission token. Through this example, you'll learn how to use Quex to access verifiable data on-chain.
+Quex provides a protocol and infrastructure for decentralized data transfer based on confidential computing.  The most simple of these for developers is data oracle, and that’s what we’ll be learning about today.
+In this guide, we’ll be conceptualizing, understanding and building a basic parametric emission token, which will give you some idea of how to use Quex for accessing verifiable data on-chain.
 
+## Document Structure
+
+This tutorial is organized into the following sections:
+
+- **Introduction**: Provides an overview of Quex and explains what we're building.
+- **Try it Out**: Quick start instructions to deploy and run the provided example.
+- **Let’s Create a Quex-based Contract**: Step-by-step instructions to set up your environment and implement smart contracts leveraging Quex.
+    - **Prepare Environment**: How to configure your development environment.
+    - **Token Emission**: Detailed implementation of ERC-20 token emission logic.
+    - **Create Flow**: Defines how data requests are structured and handled by Quex oracle pools.
+    - **Deploy and Run**: Guide to deploying the contracts and executing the request to mint tokens.
+- **Next Steps**: Recommendations on further exploration and advanced use cases.
 
 ## What Are We Building?
 
 Let’s begin by clearly defining what we’re building and why. Imagine you’re issuing a token for a DeFi protocol and want to design tokenomics that incentivize the foundation to actively increase the protocol’s Total Value Locked (TVL). One effective approach is awarding the foundation tokens proportional to the protocol's TVL, as reported by [DeFiLlama](https://defillama.com).
 
-Specifically, we’ll create a system where the foundation receives freshly minted tokens each day, equal in number to the total USD-denominated TVL of the protocol across all supported chains. For clarity and practical demonstration, we'll use the TVL data from the [DyDx protocol](https://defillama.com/protocol/dydx). Fortunately, DeFiLlama provides an [API endpoint](https://api.llama.fi/tvl/dydx) that returns exactly this metric.
-
-## Document structure
-!! TODO
-
-Here’s a polished Markdown version of your “Try it out” section, maintaining your original style and meaning closely:
+Specifically, we'll design a token where the foundation receives freshly minted tokens daily, equal in number to the USD-denominated TVL of the protocol across all supported chains and protocol versions. For clarity and practical demonstration, we'll use TVL data from the [DyDx protocol](https://defillama.com/protocol/dydx). Fortunately, DeFiLlama provides an [API endpoint](https://api.llama.fi/tvl/dydx) that returns exactly this number. However, because this data is provided off-chain, achieving our goal requires an oracle to securely transfer the data on-chain.
 
 # Try it Out
 
@@ -41,7 +48,7 @@ Run the DeployTVLEmissionScript to build and deploy the ERC-20 token, the token 
 forge script script/DeployTVLEmissionScript.s.sol --broadcast
 ```
 
-You’ll need the deployed contract address (0x48E5...E38CA as an example) for making requests. Store the deployed contract’s address as an environment variable:
+You’ll need the deployed contract address for making requests. Store the deployed contract’s address as an environment variable:
 
 ```shell
 export CONTRACT_ADDRESS=<DEPLOYED_CONTRACT_ADDRESS>
@@ -57,7 +64,7 @@ forge script script/Request.s.sol --broadcast
 
 ## Check Your Balance
 
-After a short waiting period, verify your wallet balance—you should receive freshly minted TVLT tokens, equal in amount to the current TVL of the DyDx protocol!
+Now, verify your wallet balance—you should receive freshly minted TVLT tokens, equal in amount to the current TVL of the DyDx protocol!
 
 Congratulations! You've successfully deployed your first contract that relies on confidential computing proofs to bring off-chain data to your contract. In the following sections, we'll provide a detailed explanation of what's happening under the hood of our contracts. This will give you insights and ideas for building your own Quex-based smart contracts.
 
@@ -209,6 +216,6 @@ Congratulations, you've just created your first contract using off-chain data se
 Now, all you need is to deploy the `TVLEmission` contract and call the built-in `request()` method to fetch your data and mint tokens. You can do this using any tools you prefer—particularly, you may use our prepared Foundry scripts available in the [examples repository](https://github.com/quex-tech/quex-v1-examples/tree/main/tvl-emission).
 
 
-## Next Steps
+# Next Steps
 
 Congratulations on building your very first hook! You could explore further by going to Hook Deployment to learn about how hook flags work and see how we will deploy a hook in action.
