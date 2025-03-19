@@ -84,7 +84,6 @@ We’ll also use the ERC-20 implementation from OpenZeppelin and Quex libraries 
 forge install openzeppelin/openzeppelin-contracts
 forge install quex-tech/quex-v1-interfaces
 ```
-!! TODO - Request manager
 
 ## Token emission
 
