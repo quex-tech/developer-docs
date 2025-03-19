@@ -8,7 +8,7 @@ simple script (or filter in `jq` terms) for this purpose, and illustrate the non
 
 Suppose the DApp collects the order books for BTC/USDT pair for its logic. It needs the following data from Binance:
 + The sequential number of the update to keep track of the ordering (Binance returns it as `lastUpdateId`)
-+ Five best bids
++ Five best bids 
 + Five best asks
 
 Both bid and ask are required to be tuples of integer numbers (price, quantity). The precision is required to be 8th digit
@@ -100,7 +100,7 @@ contract C is Ownable {
 ```
 
 As we are passing the arrays of nested structures, we need to compile the contract with the intermediate representation.
-For example, if you are using [Remix IDE](https://remix.ethereum.org/), go to compiler settings, enable `Use Configuration File`
+For example, if you are using [Remix IDE](https://remix.ethereum.org/), go to compiler settings, enable `Use Configuration File` 
 in the `Advanced configurations`, and add `"viaIR": true` to your `compiler_config.json`:
 ```
 {
@@ -184,12 +184,12 @@ mixed-type array which can be cast to this type. Quex Request Oracle Pool uses a
 language for JSON post-processing. Jq programs are also called filters. We start building the filter step by step.
 1. To cast a number from string to desired format, `tonumber*100000000 | floor` can be used.
 2. Now, the filter `.bids[0] | map(tonumber*100000000 | floor)` would yield the first bid converted to the
-   right format
+right format
 3. To convert all the bids to the necessary format, apply this map as nested: `.bids | map(map(tonumber*100000000 | floor))`
 4. To reuse this filter for asks, process bids and asks as an array:
-   `[.bids, .asks] | map(map(map(tonumber*100000000 | floor)))`. Now we have two arrays adhering to the encoding.
+`[.bids, .asks] | map(map(map(tonumber*100000000 | floor)))`. Now we have two arrays adhering to the encoding.
 5. Finally, prepend it with the value of `lastUpdateId`:
-   `[.lastUpdateId] + ([.bids, .asks] | map(map(map(tonumber*100000000|floor))))`
+`[.lastUpdateId] + ([.bids, .asks] | map(map(map(tonumber*100000000|floor))))`
 
 Combining it all together, the `request.json` file may now look as follows:
 ```json
@@ -236,7 +236,7 @@ to be covered per request.
 
 ## Estimate fee
 
-In our case, the tool has already shown the fee values (constituent in native currency and another constituent in gas).
+In our case, the tool has already shown the fee values (constituent in native currency and another constituent in gas). 
 However, if we needed to access them from other project, we
 could use `getRequestFee(uint256 flowId)` method of the Quex Core which returns this tuple. The value which must be
 attached to the transaction is `nativeFee + gasPrice*gas`. Suppose, the call returned `30000000000000` Wei as
