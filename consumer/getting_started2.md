@@ -145,12 +145,12 @@ contract TVLEmission is QuexRequestManager {
 
 Let’s briefly summarize what’s happening here:
 - The contract imports and inherits from `QuexRequestManager`, which simplifies interactions with Quex oracle pools and performs the necessary response verification.
-- The constructor is initialized with addresses for the token treasury, Quex core, and [HTTPs oracle pool](../https_pool/https_pool.md).
+- The constructor is initialized with addresses for the token treasury, Quex core, and the [HTTPS oracle pool](../https_pool/https_pool.md). We also deploy the `ParametricToken` contract within the constructor, becoming its owner and gaining the ability to mint tokens.
 - The `processResponse` method is implemented as a callback, which securely processes responses from the Quex oracle. It includes a cooldown period to limit request frequency and uses the `verifyResponse` modifier to protect against oracle manipulation attacks.
 
 At this point, we should make a side note regarding Quex architecture. Although Quex supports classic pull- and push-based data oracles, under the hood, all of them rely on callback mechanics. In our example, we use the fastest and most cost-efficient callback scenario, particularly useful when you need to process data directly upon receiving it.
 
-However, though we've defined a function to process responses and verify proofs, we haven't yet defined the data flow—the exact HTTPS request the oracle pool should perform and the necessary supporting information. We'll cover this in the next section.
+However, though we've defined a `processResponse` function to verify proofs and process responses, we haven't yet defined the data flow—the exact HTTPS request the oracle pool should perform and the necessary supporting information. We'll cover this in the next section.
 
 ## Create Flow
 
@@ -200,7 +200,7 @@ contract TVLEmission is QuexRequestManager {
 Let's go through the `generateFlow()` method step by step. First, we define the [HTTPS request](../https_pool/https_pool.md#httprequest) we’d like to perform—in our case, it's [https://api.llama.fi/tvl/dydx](https://api.llama.fi/tvl/dydx), which returns the USD-denominated TVL of the DyDx protocol as required for our task. Note that while our example is simple, Quex supports more advanced requests: you may specify headers, parameters, the HTTP method, and request body, if needed. These additional fields provide flexibility when working with more complex APIs.
 
 
-Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script written in the [jq](https://jqlang.org) programming language—for response post-processing. The DeFiLlama API from the previous step returns a floating-point number, e.g., `284291310.4518468`. However, standard ERC20 tokens follow a convention where token amounts are represented as integers, scaled by 10<sup>18</sup>. To achieve this, the jq script `". * 1000000000000000000 | round"` multiplies the response by 10<sup>18</sup> and rounds it to an integer.
+Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script written in the [jq](https://jqlang.org) programming language—for response post-processing. The DeFiLlama API from the previous step returns a floating-point number, e.g., `284291310.4518468`. However, standard ERC20 tokens follow a convention where token amounts are represented as integers, scaled by 1e18. To achieve this, the jq script `". * 1000000000000000000 | round"` multiplies the response by 1e18 and rounds it to an integer.
 
 Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed.
 
@@ -210,11 +210,13 @@ Finally, we need to define what happens when the response is ready. We do this u
 
 ## Deploy and Run
 
-Congratulations, you've just created your first contract using off-chain data secured by confidential computing proofs!
+That's it!
 
 Now, all you need is to deploy the `TVLEmission` contract and call the built-in `request()` method to fetch your data and mint tokens. You can do this using any tools you prefer—particularly, you may use our prepared Foundry scripts available in the [examples repository](https://github.com/quex-tech/quex-v1-examples/tree/main/tvl-emission).
 
 
-# Next Steps
+## Next Steps
 
-Congratulations on building your very first hook! You could explore further by going to Hook Deployment to learn about how hook flags work and see how we will deploy a hook in action.
+Congratulations on deploying your very first contract that relies on data secured by confidential computing proofs! You can explore further by visiting other sections of our documentation to learn how to build more complex examples and create the next generation of DApps connected to real-world data.
+
+Also, join our [Community](../community.md) to stay updated on Quex developments and engage with other developers!
