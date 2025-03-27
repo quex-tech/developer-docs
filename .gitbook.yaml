@@ -1,0 +1,4 @@
+root: ./
+
+redirects:
+  developers/getting_started2: consumer/getting_started.md

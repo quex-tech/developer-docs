@@ -18,8 +18,8 @@
 ## Developers
 
 * [Building with Quex](consumer/readme.md)
-* [Getting started tutorial](consumer/getting_started2.md)
-* [Complex structs and encrypted patches](consumer/getting_started.md)
+* [Getting started tutorial](consumer/getting_started.md)
+* [Complex structs and encrypted patches](consumer/complex_structures_tutorial.md)
 * [Client callback format](consumer/client_callback.md)
 * [Flow creation](consumer/flow_creation.md)
 * [Request oracle pool](https_pool/readme.md)
