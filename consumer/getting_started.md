@@ -159,9 +159,9 @@ However, though we've defined a `processResponse` function to verify proofs and 
 
 ## Create Flow
 
-In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract.
+In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract. For more options, explore [Flow creation](flow_creation.md) section of this documentation.
 
-To achieve this, create a `generateFlow()` function as follows and invoke it from the constructor:
+To achieve this, create a `setUpFlow()` function as follows and invoke it from the constructor:
 
 ```solidity
 ...
@@ -173,10 +173,6 @@ contract TVLEmission is QuexRequestManager {
         setUpFlow();
     }
 
-    /**
-     * @notice Creates a new flow to fetch TVL data from the DeFi Llama API for dydx, multiplies it by 1e18,
-     * and rounds to the nearest integer.
-     */
     function setUpFlow(address quexCore, address oraclePool) private onlyOwner {
         FlowBuilder.FlowConfig memory config = FlowBuilder.create(quexCore, oraclePool, "api.llama.fi", "/tvl/dydx");
         config = config.withFilter(". * 1000000000000000000 | round");
@@ -189,13 +185,13 @@ contract TVLEmission is QuexRequestManager {
 }
 ```
 
-Let's go through the `setUpFlow()` method step by step. We'll use the `FlowBuilder` helper here, which simplifies flow registration by asking us to define only the necessary fields. It's useful to create Flows right inside your smart contracts, however in a lot of cases it's useful to generate flow outside. For these cases we've created a [standalone python tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/create_flow).
+Let's go through the `setUpFlow()` method step by step. We'll use the `FlowBuilder` helper here, which simplifies flow registration by asking us to define only the necessary fields.
 
 First, we define the [HTTPS request](../https_pool/https_pool.md#httprequest) we’d like to perform—in our case, it's [https://api.llama.fi/tvl/dydx](https://api.llama.fi/tvl/dydx), which returns the USD-denominated TVL of the DyDx protocol required for our task. Although our example is straightforward, Quex supports more advanced requests: you can specify headers, parameters, HTTP methods, and request bodies as needed. Additionally, Quex allows the use of private data (such as API credentials) by passing encrypted data securely to our oracles. While we don't directly demonstrate these advanced features in this tutorial, you can explore them in a [dedicated section](private_patch.md) of our documentation. These additional options provide flexibility when working with more complex APIs.
 
 Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script written in the [jq](https://jqlang.org) programming language—for response post-processing. The DeFiLlama API from the previous step returns a floating-point number, e.g., `284291310.4518468`. However, standard ERC20 tokens follow a convention where token amounts are represented as integers, scaled by 1e18. To achieve this, the jq script `". * 1000000000000000000 | round"` multiplies the response by 1e18 and rounds it to an integer.
 
-Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed. If you wish to explore example using more complex data structures, check out [this tutorial](./complex_structures_tutorial.md).
+Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed, learn more at our [shemas page](data_scheme). If you wish to explore example using more complex data structures, check out [this tutorial](./complex_structures_tutorial.md).
 
 Finally, we need to define what happens when the response is ready. We do this using three fields: the oracle pool's address (`consumer`), the callback function (`callback`) to handle the incoming data, and a `gasLimit` for executing the callback. After defining these parameters, we call `createFlow()` to register our flow in the Quex registry, and store the returned identifier via `setFlowId()` for verifying incoming data later.
 
