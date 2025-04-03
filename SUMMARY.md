@@ -21,7 +21,6 @@
 * [Getting started tutorial](consumer/getting_started.md)
 * [Flow creation](consumer/flow_creation.md)
 * [Client callback format](consumer/client_callback.md)
-* [Complex structs and encrypted patches](consumer/complex_structures_tutorial.md)
 * [Request oracle pool](https_pool/readme.md)
     * [Descriptive guide](https_pool/https_pool.md)
     * [Supported post-processing operations](https_pool/jq_subset.md)
