@@ -113,13 +113,13 @@ Let’s create that contract, `TVLEmission.sol`, next:
 pragma solidity ^0.8.22;
 
 import "./ParametricToken.sol";
-import "quex-v1-interfaces/src/interfaces/oracles/IRequestOraclePool.sol";
-import "quex-v1-interfaces/src/interfaces/core/IFlowRegistry.sol";
 import "quex-v1-interfaces/src/libraries/QuexRequestManager.sol";
-
+/**
+ * @title TVLEmission
+ * @dev This contract manages token emissions based on Total Value Locked (TVL) data retrieved from Quex.
+ * It ensures that emissions can only be processed once per day to prevent excessive token minting.
+ */
 contract TVLEmission is QuexRequestManager {
-    address private _quexCore;
-    address private _oraclePool;
     address private _treasuryAddress;
     ParametricToken public parametricToken;
     uint256 public lastRequestTime;
@@ -128,12 +128,17 @@ contract TVLEmission is QuexRequestManager {
     constructor(address treasuryAddress, address quexCore, address oraclePool) QuexRequestManager(quexCore) {
         parametricToken = new ParametricToken();
         _treasuryAddress = treasuryAddress;
-        _quexCore = quexCore;
-        _oraclePool = oraclePool;
     }
 
+    /**
+     * @notice Processes a response from Quex and mints tokens based on TVL.
+     * @dev Ensures a minimum of 24 hours has passed since the last emission before minting new tokens.
+     * @param receivedRequestId The ID of the request that is being processed.
+     * @param response The response data from Quex, expected to contain the latest TVL value.
+     */
     function processResponse(uint256 receivedRequestId, DataItem memory response, IdType idType)
-    external verifyResponse(receivedRequestId, idType)
+        external
+        verifyResponse(receivedRequestId, idType)
     {
         require(block.timestamp >= lastRequestTime + REQUEST_COOLDOWN, "Request cooldown active");
         uint256 lastTVL = abi.decode(response.value, (uint256));
@@ -154,57 +159,39 @@ However, though we've defined a `processResponse` function to verify proofs and 
 
 ## Create Flow
 
-In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract.
+In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract. For more options, explore [Flow creation](flow_creation.md) section of this documentation.
 
-To achieve this, create a `generateFlow()` function as follows and invoke it from the constructor:
+To achieve this, create a `setUpFlow()` function as follows and invoke it from the constructor:
 
 ```solidity
+...
+using FlowBuilder for FlowBuilder.FlowConfig;
+
 contract TVLEmission is QuexRequestManager {
     constructor(address treasuryAddress, address quexCore, address oraclePool) QuexRequestManager(quexCore) {
         ...
-        generateFlow();
+        setUpFlow();
     }
 
-    function generateFlow() private onlyOwner {
-        IRequestOraclePool oraclePool = IRequestOraclePool(_oraclePool);
-        IFlowRegistry flowRegistry = IFlowRegistry(_quexCore);
-
-        HTTPRequest memory request = HTTPRequest({
-            method: RequestMethod.Get,
-            host: "api.llama.fi",
-            path: "/tvl/dydx",
-            headers: new RequestHeader[](0),
-            parameters: new QueryParameter[](0),
-            body: ""
-        });
-        bytes32 requestId = oraclePool.addRequest(request);
-        bytes32 filterId = oraclePool.addJqFilter(". * 1000000000000000000 | round");
-        bytes32 schemaId = oraclePool.addResponseSchema("uint256");
-        bytes32 patchId = 0;
-        uint256 actionId = oraclePool.addActionByParts(requestId, patchId, schemaId, filterId);
-        Flow memory flow = Flow({
-            gasLimit: 700000,
-            actionId: actionId,
-            pool: _oraclePool,
-            consumer: address(this),
-            callback: this.processResponse.selector
-        });
-        uint256 flowId = flowRegistry.createFlow(flow);
-        setFlowId(flowId);
+    function setUpFlow(address quexCore, address oraclePool) private onlyOwner {
+        FlowBuilder.FlowConfig memory config = FlowBuilder.create(quexCore, oraclePool, "api.llama.fi", "/tvl/dydx");
+        config = config.withFilter(". * 1000000000000000000 | round");
+        config = config.withSchema("uint256");
+        config = config.withCallback(address(this), this.processResponse.selector);
+        registerFlow(config);
     }
     
     ...
 }
 ```
 
-Let's go through the `generateFlow()` method step by step. First, we define the [HTTPS request](../https_pool/https_pool.md#httprequest) we’d like to perform—in our case, it's [https://api.llama.fi/tvl/dydx](https://api.llama.fi/tvl/dydx), which returns the USD-denominated TVL of the DyDx protocol as required for our task. Note that while our example is simple, Quex supports more advanced requests: you may specify headers, parameters, the HTTP method, and request body, if needed. These additional fields provide flexibility when working with more complex APIs.
+Let's go through the `setUpFlow()` method step by step. We'll use the `FlowBuilder` helper here, which simplifies flow registration by asking us to define only the necessary fields.
 
+First, we define the [HTTPS request](../https_pool/https_pool.md#httprequest) we’d like to perform—in our case, it's [https://api.llama.fi/tvl/dydx](https://api.llama.fi/tvl/dydx), which returns the USD-denominated TVL of the DyDx protocol required for our task. Although our example is straightforward, Quex supports more advanced requests: you can specify headers, parameters, HTTP methods, and request bodies as needed. Additionally, Quex allows the use of private data (such as API credentials) by passing encrypted data securely to our oracles. While we don't directly demonstrate these advanced features in this tutorial, you can explore them in a [dedicated section](private_patch.md) of our documentation. These additional options provide flexibility when working with more complex APIs.
 
 Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script written in the [jq](https://jqlang.org) programming language—for response post-processing. The DeFiLlama API from the previous step returns a floating-point number, e.g., `284291310.4518468`. However, standard ERC20 tokens follow a convention where token amounts are represented as integers, scaled by 1e18. To achieve this, the jq script `". * 1000000000000000000 | round"` multiplies the response by 1e18 and rounds it to an integer.
 
-Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed. If you wish to explore example using more complex data structures, check out [this tutorial](./complex_structures_tutorial.md).
-
-Fourth, there's a step to define a [private patch](../https_pool/https_pool.md#httpprivatepatch)—a field containing private data that will be passed within the TD in encrypted form and later on attached to the request. This is particularly useful for attaching API keys or security tokens to your requests. Creating flows with a non-empty private patch is slightly more challenging, so we've developed a [standalone tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/create_flow) to simplify the process of creating complex flows. However, since our current example doesn't require private data, we simply set the patch ID to zero: `bytes32 patchId = 0`.
+Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed, learn more at our [shemas page](../https_pool/data_scheme.md). If you wish to explore example using more complex data structures, check out [this tutorial](./complex_structures_tutorial.md).
 
 Finally, we need to define what happens when the response is ready. We do this using three fields: the oracle pool's address (`consumer`), the callback function (`callback`) to handle the incoming data, and a `gasLimit` for executing the callback. After defining these parameters, we call `createFlow()` to register our flow in the Quex registry, and store the returned identifier via `setFlowId()` for verifying incoming data later.
 

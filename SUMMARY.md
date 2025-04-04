@@ -19,12 +19,12 @@
 
 * [Building with Quex](consumer/readme.md)
 * [Getting started tutorial](consumer/getting_started.md)
-* [Complex structs and encrypted patches](consumer/complex_structures_tutorial.md)
-* [Client callback format](consumer/client_callback.md)
 * [Flow creation](consumer/flow_creation.md)
+* [Client callback format](consumer/client_callback.md)
 * [Request oracle pool](https_pool/readme.md)
     * [Descriptive guide](https_pool/https_pool.md)
     * [Supported post-processing operations](https_pool/jq_subset.md)
+    * [Data encoding format](https_pool/data_scheme.md)
 
 ## Data providers
 
