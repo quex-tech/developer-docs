@@ -1,3 +1,6 @@
+> ⚠️ **Note**: Quex smart contracts were recently updated and audited. Interfaces were slightly changed, and this section will be updated soon.  
+> Please refer to the latest interfaces in the [source code](https://github.com/quex-tech/quex-v1-interfaces) and [contact us](../community.md) for more details.
+
 # Getting started with Quex
 
 ## Project overview
