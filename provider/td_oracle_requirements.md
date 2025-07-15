@@ -9,12 +9,15 @@ the delivery routine and signature verification, the `OracleMessage` is specifie
 struct OracleMessage {
     uint256 actionId;
     DataItem dataItem;
+    address relayer;
 }
 ```
 
 Here `actionId` is the action Id assigned to the action by your pool. Note, that it is the responsibility of you as the
 TD provider to make sure that the `actionId` under signature corresponds to the actual action being performed. The
-action Id must correspond to the one defined in your [oracle pool](pool_creation.md). `DataItem` struct member is specified as
+action Id must correspond to the one defined in your [oracle pool](pool_creation.md).
+`relayer` is the address of the party that will deliver signed data on-chain and is fixed here to prevent MEV attacks.
+`DataItem` struct member is specified as
 
 ```solidity
 struct DataItem {

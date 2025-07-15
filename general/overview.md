@@ -40,3 +40,5 @@ simplify the usage and reduce the fees in the long run, Quex uses **data flows**
 recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and ID of the action to be
 performed by the oracle. Once created, the data flow is stored on-chain, and the subsequent requests to the oracle pools
 are done solely by flow ID without any extra data.
+
+Recipient contract callback may charge an unpredictable amount of gas fees, which must be paid by the relayer. To simplify the money flow during request creation and fulfillment, Quex introduces **subscriptions** - pre-deposited native tokens in a special contract used to cover all necessary fees when fulfilling requests.

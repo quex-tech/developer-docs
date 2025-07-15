@@ -20,24 +20,13 @@ initiation, and delivered solely by flow id (which is passed to the callback as 
 
 ## On-Chain initiated data transfer
 
-Having the flow registered, the on-chain data request is created by calling `createRequest(uint256 flowId)` on Quex
-Core. Note that this function is payable, and the value of native coins must be attached to it. This value consists of
-the following parts:
-+ Native coin fees (by Quex Core and by Oracle Pool)
-+ Gas consumed by Quex Core and callback
+Having the flow and subscription registered, an on-chain data request can be created by calling `createRequest(uint256 flowId, uint256 subscriptionId)` on Quex Core. At this point, the amount of tokens required to cover all potential fees (Quex, oracle pool, callback gas consumption) is reserved within the subscription until the request is fulfilled or canceled.
 
-Both of these parts can be accounted for by querying view `getRequestFee(uint256 flowId)` in Quex Core. This method
-returns the tuple `(uint256 nativeFee, uint256 gasFee)`. The value to be attached to the request creating transaction
-can be computed as `nativeFee + tx.gasPrice*gasFee`. In case larger value is transferred, the change will be returned
-from Quex Core to the sender.
-
-Once the request is created, it is transferred to an oracle. The signed oracle response is delivered by the relayer to
-`fulfillRequest(OracleMessage memory message, ETHSignature memory signature, uint256 requestId, uint256 tdId)`. At this
-point, the oracle pool policies are checked, signature is verified, and the data is dispatched to the consumer callback.
+Once the request is created, it is transferred to an oracle. The signed oracle response is delivered by the relayer to `fulfillRequest(OracleMessage memory message, ETHSignature memory signature, uint256 requestId, uint256 tdId)`. At this stage, oracle pool policies are checked, the signature is verified, and the data is dispatched to the consumer callback. Since the actual gas consumed by the client's callback is known at this point, the reserved tokens are released from the subscription, and the actual fees are distributed among Quex Core, the oracle pool, and the relayer.
 
 ## Off-chain initiated data transfer
 
 This case is way simpler, as the only method invoked on-chain is `pushData(OracleMessage memory message, ETHSignature
-memory signature, uint256 flowId, uint256 tdId)`. Note that this method is again payable, and the attached value can be
-obtained via `getQuexFee(uint256 flowId)` method. The difference is that in this case the relaying party pays the Quex
-Fee, whereas in previous case the request initiating party paid, and the relayer was reimbursed for the gas spent.
+memory signature, uint256 flowId, uint256 tdId)`. Note that this method is payable, and the attached value can be
+obtained via `getQuexFee(uint256 flowId)` method. The difference is that in this case the relaying party pays only the Quex
+Fee, whereas in previous case the relayer was reimbursed for the gas spent from the subscription.
