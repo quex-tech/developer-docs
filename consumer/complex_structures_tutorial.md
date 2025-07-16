@@ -1,6 +1,3 @@
-> ⚠️ **Note**: Quex smart contracts were recently updated and audited. Interfaces were slightly changed, and this section will be updated soon.  
-> Please refer to the latest interfaces in the [source code](https://github.com/quex-tech/quex-v1-interfaces) and [contact us](../community.md) for more details.
-
 # Getting started with Quex
 
 ## Project overview
@@ -60,13 +57,14 @@ struct OrderBook {
 }
 
 contract C is Ownable {
+    uint256 subscriptionId;
     uint256 requestId;
     OrderBook[] orderBooks;
 
     // We will track the requests performed by the unique request Id assigned by Quex
     // Only keep the latest request Id
-    function request(uint256 flowId) public payable onlyOwner returns(uint256) {
-        requestId = quexCore.createRequest{value:msg.value}(flowId);
+    function request(uint256 flowId) public onlyOwner returns(uint256) {
+        requestId = quexCore.createRequest(flowId, subscriptionId);
         return requestId;
     }
 
@@ -87,6 +85,11 @@ contract C is Ownable {
         // Use the data. In this case we just store them
         orderBooks.push(abi.decode(response.value, (OrderBook)));
         return;
+    }
+
+    // Set subscription to use in request()
+    function setSubscriptionId(uint256 _subscriptionId) external {
+        subscriptionId = _subscriptionId;
     }
 
     // Simple view function to see the results
@@ -123,6 +126,11 @@ Binance open API. Since this action is quite specific, the pool does not know it
 on the pool contract and get its id. If you are interested in the specifics of this process, consult the [Request Pool
 Description](../https_pool/https_pool.md). In this tutorial we use the helper tool to create both action and flow
 simultaneously, so let us go through the idea behind the flow creation first.
+
+
+## Set up subscription
+
+Set up and replenish a subscription using [Subscription management](../consumer/subscription_management.md) guide. Note, that in our case a consumer is this contract itself, as it initiates requests. Then, provide the subscription id to the contract using `setSubscriptionId` method.
 
 ## Create flow
 

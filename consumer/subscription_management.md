@@ -17,6 +17,8 @@ interface IDepositManager {
 }
 ```
 
+In most cases, you’d use our [Request management](https://github.com/quex-tech/quex-v1-interfaces/pull/6/files) tool which includes a built-in `createSubscriotion()` method. However, in this manual, we’ll give a more detailed breakdown of what happens during subscription setup.
+
 To start using a subscription, a client should first register it and save its ID:
 
 ```solidity
