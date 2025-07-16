@@ -157,7 +157,7 @@ At this point, we should make a side note regarding Quex architecture. Although 
 
 However, though we've defined a `processResponse` function to verify proofs and process responses, we haven't yet defined the data flow—the exact HTTPS request the oracle pool should perform and the necessary supporting information. We'll cover this in the next section.
 
-## Create Flow
+## Set up Flow and Subscription
 
 In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract. For more options, explore [Flow creation](flow_creation.md) section of this documentation.
 
@@ -194,6 +194,24 @@ Second, we define a [filter](../https_pool/https_pool.md#jqfilter)—a script wr
 Third, we define a response [schema](../https_pool/https_pool.md#responseschema)—this is the format for encoding the oracle response. In our example, the response (an unsigned numeric value) can be easily encoded as a Solidity `uint256`. However, you're not limited by this choice and can define more complex schemas if needed, learn more at our [shemas page](../https_pool/data_scheme.md). If you wish to explore example using more complex data structures, check out [this tutorial](./complex_structures_tutorial.md).
 
 Finally, we need to define what happens when the response is ready. We do this using three fields: the oracle pool's address (`consumer`), the callback function (`callback`) to handle the incoming data, and a `gasLimit` for executing the callback. After defining these parameters, we call `createFlow()` to register our flow in the Quex registry, and store the returned identifier via `setFlowId()` for verifying incoming data later.
+
+## Set up subscription
+
+To simplify the money flow during request creation and fulfillment, Quex uses **subscriptions** - pre-deposited native tokens managed by the `IDepositManager` contract, which handle covering all necessary fees when fulfilling requests. `QuexRequestManager` already has a built-in `createSubscription()` method, which performs the necessary steps to create and set up a subscription. The only parameter you need to provide is the initial deposit amount. You can always replenish the subscription using the `deposit()` method from `IDepositManager` or withdraw remaining funds using the `withdraw()` method. For more details, you can refer to [Subscription management](../consumer/subscription_management.md) section of this documentation.
+
+
+```solidity
+...
+
+contract TVLEmission is QuexRequestManager {
+    constructor(address treasuryAddress, address quexCore, address oraclePool) QuexRequestManager(quexCore) {
+        ...
+        createSubscription();
+    }
+    
+    ...
+}
+```
 
 ## Deploy and Run
 
