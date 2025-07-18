@@ -75,7 +75,7 @@ Chainlink-style adapters for push-based price feeds:
 </details>
 
 <details>
-  <summary>Ethereum Mainnet</summary>
+  <summary>Ethereum Sepolia</summary>
 
 | Parameter               | Value                                        |
 |-------------------------|----------------------------------------------|
@@ -86,7 +86,7 @@ Chainlink-style adapters for push-based price feeds:
 </details>
 
 <details>
-  <summary>Base</summary>
+  <summary>Base Sepolia</summary>
 
 | Parameter               | Value                                        |
 |-------------------------|----------------------------------------------|
@@ -97,7 +97,7 @@ Chainlink-style adapters for push-based price feeds:
 </details>
 
 <details>
-  <summary>Waterfall</summary>
+  <summary>Waterfall testnet</summary>
 
 | Parameter               | Value                                        |
 |-------------------------|----------------------------------------------|
