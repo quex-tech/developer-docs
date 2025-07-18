@@ -157,7 +157,7 @@ At this point, we should make a side note regarding Quex architecture. Although 
 
 However, though we've defined a `processResponse` function to verify proofs and process responses, we haven't yet defined the data flow—the exact HTTPS request the oracle pool should perform and the necessary supporting information. We'll cover this in the next section.
 
-## Set up Flow and Subscription
+## Create Flow
 
 In Quex terminology, a `Flow` is a combination of the recipient contract address, recipient contract callback, callback gas limit, oracle pool address, and the ID of the action to be performed by the oracle. While there are multiple ways to define a `Flow`, for clarity in our example, we'll define it directly within our contract. For more options, explore [Flow creation](flow_creation.md) section of this documentation.
 
