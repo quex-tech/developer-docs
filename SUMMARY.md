@@ -20,6 +20,7 @@
 * [Building with Quex](consumer/readme.md)
 * [Getting started tutorial](consumer/getting_started.md)
 * [Flow creation](consumer/flow_creation.md)
+* [Subscription management](consumer/subscription_management.md)
 * [Client callback format](consumer/client_callback.md)
 * [Request oracle pool](https_pool/readme.md)
     * [Descriptive guide](https_pool/https_pool.md)
