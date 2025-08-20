@@ -42,8 +42,8 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 | Parameter               | Value                                        |
 |-------------------------|----------------------------------------------|
-| **Quex Core**           | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
-| **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
+| **Quex Core**           | `0xdF9Ceab830E261E938F1fcD7D12fe90fcace4f6b` |
+| **Request Oracle Pool** | `0x8138dffa6210cd3DD7907cc3E62bf3c95E2654C9` |
 | **TD Pubkey**           | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
 
 Chainlink-style adapters for push-based price feeds:
@@ -110,8 +110,8 @@ Chainlink-style adapters for push-based price feeds:
 
 | Parameter               | Value                                        |
 |-------------------------|----------------------------------------------|
-| **Quex Core**           | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
-| **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
+| **Quex Core**           | `0x8D91C19077891feF9Fe3415d8407156a8547cb70` |
+| **Request Oracle Pool** | `0x7C428E3d48Fc393de3206D37f46f5BFEd8042F34` |
 | **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
 
 Chainlink-style adapters for push-based price feeds:
@@ -135,5 +135,27 @@ Chainlink-style adapters for push-based price feeds:
 | **Quex Core**           | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
 | **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
 | **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67`                                         |
+
+</details>
+
+<details>
+  <summary>Kasplex testnet</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0x48f15775Bc2d83BA18485FE19D4BC6a7ad90293c` |
+| **Request Oracle Pool** | `0xE6b65c64c5Db1027b5DFC403A98B6b294c68C318` |
+| **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
+
+Chainlink-style adapters for push-based price feeds:
+
+| Address                                               | Pair      |
+|-------------------------------------------------------|-----------|
+| `0xb6200878F27cA875870468169f2FD0Ea2E150Fe0`          | KAS/USD |
+|  `0x0215906dF3F2A2bF161e55AF26643EBAbD99cD50` | BTC/USD   |
+| `0xd8c631881d5d1C8134a773dCe69BC2280Da9983E` | ETH/USD   |
+| `0xC741aEc2cbc48A7396641C2131e0c1cB4bA61683` | USDT/USD  |
+| `0xafEDE0D21f84f42FBb691430e0a238B34fc37597` | USDC/USD  |
+| `0x18976d69e7F1F7a740Fe1485ebB19C8dfe8DC84c` | DAI/USD   |
 
 </details>
