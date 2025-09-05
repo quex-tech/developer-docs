@@ -159,3 +159,48 @@ Chainlink-style adapters for push-based price feeds:
 | `0x18976d69e7F1F7a740Fe1485ebB19C8dfe8DC84c` | DAI/USD   |
 
 </details>
+
+<details>
+  <summary>Igra Caravel testnet</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0x4d14714Ec77d7300011873fD4c828cbbc6c4d9EB` |
+| **Request Oracle Pool** | `0x1784774296677263EA4Be000464Ee7b944059DdA` |
+| **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
+
+Chainlink-style adapters for push-based price feeds:
+
+| Address                                               | Pair      |
+|-------------------------------------------------------|-----------|
+| `0x1DB0AAD6b7a7061b89DA98e8195737658d895D11`          | KAS/USD |
+|  `0xC6EDcB67b99D7ddf700a69A29C8a57F6648Ad9Eb` | BTC/USD   |
+| `0xc96638083F34200D951319E8306B9319D36d4a87` | ETH/USD   |
+| `0x95D2464d093F95593FcAd951A45BCA98d85bD6FA` | USDT/USD  |
+| `0x82B6aCB6fd4591dE11080F6129b08cA0A9d476c3` | USDC/USD  |
+| `0x209f4a6Ef6C410aB824938553C55Be9E473F38BF` | DAI/USD   |
+
+</details>
+
+<details>
+  <summary>Redbelly testnet</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0xb786eb839c6b3Abdb7348732E106Cb40ae740d9a` |
+| **Request Oracle Pool** | `0xF28556eD4be4935fc8c1AfF9cc5071b1B162bc67` |
+| **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
+
+Chainlink-style adapters for push-based price feeds:
+
+| Address                                               | Pair      |
+|-------------------------------------------------------|-----------|
+| `0xd65FBE82E5B05856404ccf8f660eF0f5a9298BCc`          | RBNT/USD |
+|  `0xE0e30bff11dB3d945ba2Cc3A5A7EA45753943F3d` | USDT/USD   |
+| `0x867B1139D10032309708aA1e5a1f3606F0936ae8` | USDC/USD   |
+| `0x237573E5cCB36Bb28C2787613868034E79e56218` | WETH/USD  |
+| `0xC0f2B85B2e4a3ed3BD0f179549B345Be4b146FE3` | WRBNT/USD  |
+| `0x4ae86EAd242ca798e86D0A9afc3F7889eba1BC60` | WBTC/USD   |
+| `0x51d5f1cce3523541A0766fa064EC3837385aE656` | LQDX/USD   |
+
+</details>
