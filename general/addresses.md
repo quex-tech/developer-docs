@@ -70,6 +70,29 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
+<details>
+  <summary>Redbelly</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0x5db309414907b144Ba4d00dF9f0D90CE0A022645` |
+| **Request Oracle Pool** | `0x84FB8E2b756015CDbc51A66351B07560c3Dd07Ab` |
+| **TD Pubkey**           | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d`                                         |
+
+Chainlink-style adapters for push-based price feeds:
+
+| Address                                               | Pair      |
+|-------------------------------------------------------|-----------|
+| `0x1686eB41D4D14f04BE26DdA482ed7dCAd8Fc0F78`          | RBNT/USD |
+| `0xC120BA2F49375c28Bb32b7D94cf8373D4bF84BFC` | USDT/USD  |
+| `0x14fc410E5b7bFa85593f12b32ad1c3f836EEfD70` | USDC/USD  |
+| `0xd98bfb86E9Fa03AC8a78897f1F85a6eDaDDc0683` | WETH/USD   |
+| `0x19DEfEF98bbCf36E530D102Af5D0E6B971480163` | WRBNT/USD   |
+|  `0x9a8de9f649321279975Be3a42F3E141124C081D0` | WBTC/USD   |
+| `0x4cf383F6cc7cEe5ebAA246268bDe28787E791aa1` | LQDX/USD   |
+
+</details>
+
 ## Testnets
 
 <details>
