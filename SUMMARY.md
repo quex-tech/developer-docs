@@ -26,6 +26,9 @@
     * [Descriptive guide](https_pool/https_pool.md)
     * [Supported post-processing operations](https_pool/jq_subset.md)
     * [Data encoding format](https_pool/data_scheme.md)
+* [TDX](tdx/readme.md)
+    * [Quex Key Management](tdx/key_initialization.md)
+    * [Reproducible builds, verification, and more](tdx/vm_creation.md)
 
 ## Data providers
 
