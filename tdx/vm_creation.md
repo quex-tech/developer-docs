@@ -19,7 +19,7 @@ please refer to [quex-pack](https://github.com/quex-tech/quex-pack) readme.
 
 This utility creates a minimal kernel image inside isolated environment. The image only contains minimum necessary to
 run docker and a network adapter. For example, it does not have console devices, or ssh. The `init` process is
-customized to mount necessary filesystems, enable networking, start key enrollment routine, and fun docker afterwards.
+customized to mount necessary filesystems, enable networking, start key enrollment routine, and run docker afterwards.
 
 After the image is created, you can obtain the measurements of the TD which will run this image. You can do so either by
 using our [online tool](https://verify.quex.tech), or with our cli tool
