@@ -53,7 +53,7 @@ party in binary. In case you are curious, the structure being sent is `td_key_re
 Currently, vault app is operating with files with default names. It reads `seed.dat` and `key_req.dat`, and writes
 `quote.dat` together with `key_msg.dat`. So when you run
 ```sh
-vault -s
+vault -k
 ```
 you receive `quote.dat` and `key_msg.dat` binaries. Wrap them into
 [quoted_td_key_response_t](https://github.com/quex-tech/quex-pack/blob/main/src/init/types.h) and send back to the
