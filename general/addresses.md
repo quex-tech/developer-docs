@@ -93,6 +93,17 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
+<details>
+  <summary>0g</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0x48f15775Bc2d83BA18485FE19D4BC6a7ad90293c` |
+| **Request Oracle Pool** | `0xe0655573eCfE62a2e79ca99a4FB8d87a3e0B4822` |
+| **TD Pubkey**           | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d`                                         |
+
+</details>
+
 ## Testnets
 
 <details>
@@ -225,5 +236,16 @@ Chainlink-style adapters for push-based price feeds:
 | `0xC0f2B85B2e4a3ed3BD0f179549B345Be4b146FE3` | WRBNT/USD  |
 | `0x4ae86EAd242ca798e86D0A9afc3F7889eba1BC60` | WBTC/USD   |
 | `0x51d5f1cce3523541A0766fa064EC3837385aE656` | LQDX/USD   |
+
+</details>
+
+<details>
+  <summary>0g Galileo Testnet</summary>
+
+| Parameter               | Value                                        |
+|-------------------------|----------------------------------------------|
+| **Quex Core**           | `0x4d14714Ec77d7300011873fD4c828cbbc6c4d9EB` |
+| **Request Oracle Pool** | `0xf9025276BD6Ac11DC0579b0340f1572E2aB0e60b` |
+| **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67`                                         |
 
 </details>
