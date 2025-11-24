@@ -91,6 +91,16 @@ Here `ephemeral_key` is x-coordinate of the point followed by the y-coordinate o
 The symmetric key for the ciphertext is generated as 32-byte SHA256-HKDF of concatenation of ephemeral key and shared EC point.
 Both elliptic curve points are encoded and uncompressed (prefixed with `0x04` byte).
 
+### Patch Ownership
+
+When a private patch is first added via `addPrivatePatch()` or `addAction()`, the caller becomes the owner of that patch. The patch ID is computed as `keccak256` of the ABI-encoded `HTTPPrivatePatch`, so patches with identical content will have the same ID and share the same owner (the first address that registered it).
+
+The owner is automatically authorized as a consumer of their own patch. Only authorized consumers can use a patch when creating actions via `addAction()` or `addActionByParts()`. The owner can manage the list of authorized consumers using:
++ `addPrivatePatchConsumer(bytes32 patchId, address consumer)` - grants a consumer permission to use the patch
++ `removePrivatePatchConsumer(bytes32 patchId, address consumer)` - revokes a consumer's permission to use the patch
+
+This ownership model allows patch creators to control who can use their encrypted patches in request actions, providing access control for sensitive data like API keys.
+
 ## jqFilter
 
 `jqFilter` is the string representing the filter in the language `jq` to be applied to the response prior to data return. Quex Request
