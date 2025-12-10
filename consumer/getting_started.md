@@ -259,7 +259,7 @@ forge install
 To deploy these contracts, you'll need:
 1. A wallet with gas tokens on your chosen network (e.g., Arbitrum Sepolia)
 2. An OpenAI API key
-3. A Trust Domain (TD) address configured with your OpenAI API key
+3. A Trust Domain (TD) address and private key that you can find [here](../general/addresses.md)
 
 Set your private key as an environment variable:
 
@@ -268,7 +268,7 @@ export SECRET=<0xYourPrivateKey>
 ```
 
 **Important**: Before deploying, you need to:
-1. Register your OpenAI API key with a Trust Domain (TD) to get the encrypted API key
+1. Encrypt your OpenAI API key with a Trust Domain public key to get the encrypted API key
 2. Update the `TRUST_DOMAIN` constant in `script/DeployOpenAIScript.s.sol` with actual TD address (see [here](../general/addresses.md))
 3. Set the encrypted API key as an environment variable (as hex string):
 
@@ -276,8 +276,11 @@ export SECRET=<0xYourPrivateKey>
 export ENCRYPTED_API_KEY=<0xEncryptedApiKeyHex>
 ```
 
-The encrypted API key should be in the format `"Bearer sk-..."` encrypted by the Trust Domain and provided as a hex string (starting with `0x`).
-For details on the encryption format, refer to [this section of the tooling code](https://github.com/quex-tech/quex-v1-interfaces/blob/9d454bfe1e0c632d1b15caadf3a76c5bd0f12f2f/tools/create_flow/create_flow.py#L45).
+To encrypt your API key, use our [sensitive data encryption tool](https://github.com/quex-tech/quex-v1-interfaces/tree/master/tools/encrypt_data) as follows:
+
+```shell
+python encrypt_data.py --data "Bearer sk-..." --td-public-key 0x71d4...
+```
 
 ### Build and Deploy Contracts
 
