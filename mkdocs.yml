@@ -70,7 +70,7 @@ not_in_nav: |
   consumer/old_gs.md
 
 nav:
-  - Home: readme.md
+  - Home: index.md
   - How it works:
       - Overview: overview/readme.md
       - Why another oracle?: overview/why-another.md
