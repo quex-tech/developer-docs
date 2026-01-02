@@ -1,0 +1,106 @@
+site_name: Quex Documentation
+site_url: https://docs.quex.tech
+site_description: Intelligent data oracles for Real-World applications
+repo_url: https://github.com/quex-tech/developer-docs
+repo_name: quex-tech/developer-docs
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/quex-tech
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/quaboratory
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/quex
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+# Exclude legacy/internal files
+not_in_nav: |
+  SUMMARY.md
+  consumer/old_gs.md
+
+nav:
+  - Home: readme.md
+  - How it works:
+      - Overview: overview/readme.md
+      - Why another oracle?: overview/why-another.md
+      - Quex oracle security: overview/security.md
+      - Onchain verification: overview/verification.md
+  - General information:
+      - Where to start: general/introduction.md
+      - Quex approach and terminology: general/overview.md
+      - Quex data delivery modes: general/data_delivery.md
+      - Smart contract addresses: general/addresses.md
+      - VM verification: general/vm_verification.md
+  - Developers:
+      - Building with Quex: consumer/readme.md
+      - Getting started tutorial: consumer/getting_started.md
+      - Complex structures tutorial: consumer/complex_structures_tutorial.md
+      - Flow creation: consumer/flow_creation.md
+      - Subscription management: consumer/subscription_management.md
+      - Client callback format: consumer/client_callback.md
+      - Request oracle pool:
+          - Overview: https_pool/readme.md
+          - Descriptive guide: https_pool/https_pool.md
+          - Supported post-processing operations: https_pool/jq_subset.md
+          - Data encoding format: https_pool/data_scheme.md
+      - TDX:
+          - Overview: tdx/readme.md
+          - Quex Key Management: tdx/key_initialization.md
+          - Reproducible builds, verification, and more: tdx/vm_creation.md
+  - Data providers:
+      - Running your own oracle pool: provider/running_your_own_pool.md
+      - TD oracle requirements: provider/td_oracle_requirements.md
+      - Registering your Trust Domain: provider/td_registration.md
+      - Pool creation: provider/pool_creation.md
+  - Community: community.md
