@@ -32,6 +32,7 @@ theme:
     - search.suggest
     - content.code.copy
     - content.code.annotate
+  favicon: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
 
