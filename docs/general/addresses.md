@@ -214,6 +214,7 @@ Chainlink-style adapters for push-based price feeds:
 |-------------------------|----------------------------------------------|
 | **Quex Core**           | `0x48f15775Bc2d83BA18485FE19D4BC6a7ad90293c` |
 | **Request Oracle Pool** | `0xE6b65c64c5Db1027b5DFC403A98B6b294c68C318` |
+| **TD Pubkey**           | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
 | **TD Address**          | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
 
 Chainlink-style adapters for push-based price feeds:
