@@ -4,7 +4,7 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 ## Mainnets
 
-<details>
+<details markdown id="arbitrum-one">
   <summary>Arbitrum One</summary>
 
 | Parameter | Value |
@@ -16,7 +16,7 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 </details>
 
-<details>
+<details markdown id="ethereum-mainnet">
   <summary>Ethereum Mainnet</summary>
 
 | Parameter | Value |
@@ -28,7 +28,7 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 </details>
 
-<details>
+<details markdown id="base">
   <summary>Base</summary>
 
 | Parameter | Value |
@@ -40,30 +40,7 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 </details>
 
-<details>
-  <summary>Waterfall</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0xdF9Ceab830E261E938F1fcD7D12fe90fcace4f6b` |
-| **Request Oracle Pool** | `0x8138dffa6210cd3DD7907cc3E62bf3c95E2654C9` |
-| **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
-| **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
-
-Chainlink-style adapters for push-based price feeds:
-
-| Address | Pair |
-|---------|------|
-| `0x27c3971Faf6F9aAc383Ad6DBA32ecB424C052Aab` | WATER/USD |
-| `0x73fF5727D35C50DB4eA4D5Da1e1f5d17a6A2d680` | BTC/USD |
-| `0x4271040Ed906a7D15bec845BCEdcF9f37f74255b` | ETH/USD |
-| `0x302f5E7D1266d9139E7ee013C16d3EAF154F4284` | USDT/USD |
-| `0x82A910F684aFdd6C6bc46fBfA9B02AA79a0ca9C8` | USDC/USD |
-| `0x34A1A3A2BEa53F4A6fab1E5c357c6ED2F246b79E` | POL/USD |
-
-</details>
-
-<details>
+<details markdown id="xdc">
   <summary>XDC</summary>
 
 | Parameter | Value |
@@ -75,7 +52,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="redbelly">
   <summary>Redbelly</summary>
 
 | Parameter | Value |
@@ -99,7 +76,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="0g">
   <summary>0g</summary>
 
 | Parameter | Value |
@@ -113,7 +90,7 @@ Chainlink-style adapters for push-based price feeds:
 
 ## Testnets
 
-<details>
+<details markdown id="arbitrum-sepolia">
   <summary>Arbitrum Sepolia</summary>
 
 | Parameter | Value |
@@ -125,7 +102,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="ethereum-sepolia">
   <summary>Ethereum Sepolia</summary>
 
 | Parameter | Value |
@@ -137,7 +114,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="base-sepolia">
   <summary>Base Sepolia</summary>
 
 | Parameter | Value |
@@ -149,30 +126,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
-  <summary>Waterfall testnet</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0x8D91C19077891feF9Fe3415d8407156a8547cb70` |
-| **Request Oracle Pool** | `0x7C428E3d48Fc393de3206D37f46f5BFEd8042F34` |
-| **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
-| **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
-
-Chainlink-style adapters for push-based price feeds:
-
-| Address | Pair |
-|---------|------|
-| `0xe9f52820A10794BFD5274350803772e1a8cCe165` | WATER/USD |
-| `0xe33c2E76AC12509fEE2a9D148CAf93fd709d7902` | BTC/USD |
-| `0x455d1E968057Aa328586Fb6685C8c0092dB0b8e1` | ETH/USD |
-| `0xB464624B2Cca44D4e8AF896f03Ff1Fc66197255D` | USDT/USD |
-| `0x7c1f2b5adE0ee7B03f5329E665Df01Fe1045b64e` | USDC/USD |
-| `0x493022F2696D8579a2593C43feE0DAC9008d1c67` | POL/USD |
-
-</details>
-
-<details>
+<details markdown id="xdc-apothem">
   <summary>XDC Apothem</summary>
 
 | Parameter | Value |
@@ -184,7 +138,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="kasplex-testnet">
   <summary>Kasplex testnet</summary>
 
 | Parameter | Value |
@@ -207,7 +161,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="igra-galleon-testnet">
   <summary>Igra Galleon testnet</summary>
 
 | Parameter | Value |
@@ -231,7 +185,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="redbelly-testnet">
   <summary>Redbelly testnet</summary>
 
 | Parameter | Value |
@@ -255,7 +209,7 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details>
+<details markdown id="0g-galileo-testnet">
   <summary>0g Galileo Testnet</summary>
 
 | Parameter | Value |
