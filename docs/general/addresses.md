@@ -76,6 +76,30 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
+<details markdown id="igra">
+  <summary>Igra</summary>
+
+| Parameter | Value |
+|-----------|-------|
+| **Quex Core** | `0xC3546441897D9c87B3808c9402Bcb0655F238541` |
+| **Request Oracle Pool** | `0x7311069095613B2776DB66e0E88f8E4DC63cfC67` |
+| **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
+| **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
+
+Chainlink-style adapters for push-based price feeds:
+
+| Address | Pair |
+|---------|------|
+| `0xd4D0cbbd05FBf1cAEb4c56956D992C5CCCdcD88e` | KAS/USD |
+| `0xE07F8a0C78a4B843A65DeB8e12Af9121EAb84dB2` | BTC/USD |
+| `0x8b8B506B8BADFA687EAF2467ca9b0C74e1f9633F` | ETH/USD |
+| `0x27629A0b955F0baE31fEF908FBF6051A8cd6D735` | USDT/USD |
+| `0x06Bc2d4ed8Caf9DFfa8EAead325e7Ecb4E1489a2` | USDC/USD |
+| `0x06e6a0E09871a1c0D039DC55dc64421DA7B4E723` | DAI/USD |
+| `0x002d29824e52B1d323927219C7C7b81e14EdF22f` | BNB/USD |
+
+</details>
+
 <details markdown id="0g">
   <summary>0g</summary>
 
