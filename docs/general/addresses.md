@@ -100,6 +100,18 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
+<details markdown id="avalanche">
+  <summary>Avalanche C-Chain</summary>
+
+| Parameter | Value |
+|-----------|-------|
+| **Quex Core** | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
+| **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
+| **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
+| **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
+
+</details>
+
 <details markdown id="0g">
   <summary>0g</summary>
 
