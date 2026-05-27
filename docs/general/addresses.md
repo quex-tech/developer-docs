@@ -62,18 +62,6 @@ The page below contains list of supported networks, with Quex addresses and othe
 | **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
 | **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
 
-Chainlink-style adapters for push-based price feeds:
-
-| Address | Pair |
-|---------|------|
-| `0x1686eB41D4D14f04BE26DdA482ed7dCAd8Fc0F78` | RBNT/USD |
-| `0xC120BA2F49375c28Bb32b7D94cf8373D4bF84BFC` | USDT/USD |
-| `0x14fc410E5b7bFa85593f12b32ad1c3f836EEfD70` | USDC/USD |
-| `0xd98bfb86E9Fa03AC8a78897f1F85a6eDaDDc0683` | WETH/USD |
-| `0x19DEfEF98bbCf36E530D102Af5D0E6B971480163` | WRBNT/USD |
-| `0x9a8de9f649321279975Be3a42F3E141124C081D0` | WBTC/USD |
-| `0x4cf383F6cc7cEe5ebAA246268bDe28787E791aa1` | LQDX/USD |
-
 </details>
 
 <details markdown id="igra">
@@ -230,18 +218,6 @@ Chainlink-style adapters for push-based price feeds:
 | **Request Oracle Pool** | `0xF28556eD4be4935fc8c1AfF9cc5071b1B162bc67` |
 | **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
 | **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
-
-Chainlink-style adapters for push-based price feeds:
-
-| Address | Pair |
-|---------|------|
-| `0xd65FBE82E5B05856404ccf8f660eF0f5a9298BCc` | RBNT/USD |
-| `0xE0e30bff11dB3d945ba2Cc3A5A7EA45753943F3d` | USDT/USD |
-| `0x867B1139D10032309708aA1e5a1f3606F0936ae8` | USDC/USD |
-| `0x237573E5cCB36Bb28C2787613868034E79e56218` | WETH/USD |
-| `0xC0f2B85B2e4a3ed3BD0f179549B345Be4b146FE3` | WRBNT/USD |
-| `0x4ae86EAd242ca798e86D0A9afc3F7889eba1BC60` | WBTC/USD |
-| `0x51d5f1cce3523541A0766fa064EC3837385aE656` | LQDX/USD |
 
 </details>
 
