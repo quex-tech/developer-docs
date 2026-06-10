@@ -40,30 +40,6 @@ The page below contains list of supported networks, with Quex addresses and othe
 
 </details>
 
-<details markdown id="xdc">
-  <summary>XDC</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
-| **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
-| **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
-| **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
-
-</details>
-
-<details markdown id="redbelly">
-  <summary>Redbelly</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0x5db309414907b144Ba4d00dF9f0D90CE0A022645` |
-| **Request Oracle Pool** | `0x84FB8E2b756015CDbc51A66351B07560c3Dd07Ab` |
-| **TD Pubkey** | `0x91b85e68863b4a58fbb9510a1dd5f0d34aa1e44de1d1eb61d9257df6276bc3da347c4b14599f2428698465a1a9fa104e959dca2183717b75e8700bc760f46f6d` |
-| **TD Address** | `0xB86EeAe9e3F0D3a91cE353CB0EfEaFF17CF16E6f` |
-
-</details>
-
 <details markdown id="igra">
   <summary>Igra</summary>
 
@@ -112,6 +88,20 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
+<details markdown id="cardano">
+  <summary>Cardano</summary>
+
+Non-EVM pull oracle (eUTXO model, Plutus validators). Code: [quex-tech/cardano-oracle](https://github.com/quex-tech/cardano-oracle).
+
+| Parameter | Value |
+|-----------|-------|
+| **Oracle Request Validator** | `addr1w90wmmcx3fd2yxrd4jn895qs98pul3u9pcqd5wzm45ldeygmj9mdl` |
+| **Oracle Response Validator** | `addr1w8qf8j5tc5ccedm8yxwvryr65qcjpwnfd7ejjw6gq609ahqxexh26` |
+
+Usage: see the [off-chain README](https://github.com/quex-tech/cardano-oracle/blob/main/off-chain/README.md), sections "Generate a wallet" and "Create and manage pending requests".
+
+</details>
+
 ## Testnets
 
 <details markdown id="arbitrum-sepolia">
@@ -150,41 +140,6 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details markdown id="xdc-apothem">
-  <summary>XDC Apothem</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0x97076a3c0A414E779f7BEC2Bd196D4FdaADFDB96` |
-| **Request Oracle Pool** | `0xE83bB2038F098E7aD40DC03298F4337609E6b0d5` |
-| **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
-| **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
-
-</details>
-
-<details markdown id="kasplex-testnet">
-  <summary>Kasplex testnet</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0x48f15775Bc2d83BA18485FE19D4BC6a7ad90293c` |
-| **Request Oracle Pool** | `0xE6b65c64c5Db1027b5DFC403A98B6b294c68C318` |
-| **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
-| **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
-
-Chainlink-style adapters for push-based price feeds:
-
-| Address | Pair |
-|---------|------|
-| `0xb6200878F27cA875870468169f2FD0Ea2E150Fe0` | KAS/USD |
-| `0x0215906dF3F2A2bF161e55AF26643EBAbD99cD50` | BTC/USD |
-| `0xd8c631881d5d1C8134a773dCe69BC2280Da9983E` | ETH/USD |
-| `0xC741aEc2cbc48A7396641C2131e0c1cB4bA61683` | USDT/USD |
-| `0xafEDE0D21f84f42FBb691430e0a238B34fc37597` | USDC/USD |
-| `0x18976d69e7F1F7a740Fe1485ebB19C8dfe8DC84c` | DAI/USD |
-
-</details>
-
 <details markdown id="igra-galleon-testnet">
   <summary>Igra Galleon testnet</summary>
 
@@ -209,18 +164,6 @@ Chainlink-style adapters for push-based price feeds:
 
 </details>
 
-<details markdown id="redbelly-testnet">
-  <summary>Redbelly testnet</summary>
-
-| Parameter | Value |
-|-----------|-------|
-| **Quex Core** | `0xb786eb839c6b3Abdb7348732E106Cb40ae740d9a` |
-| **Request Oracle Pool** | `0xF28556eD4be4935fc8c1AfF9cc5071b1B162bc67` |
-| **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
-| **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
-
-</details>
-
 <details markdown id="0g-galileo-testnet">
   <summary>0g Galileo Testnet</summary>
 
@@ -230,5 +173,23 @@ Chainlink-style adapters for push-based price feeds:
 | **Request Oracle Pool** | `0xf9025276BD6Ac11DC0579b0340f1572E2aB0e60b` |
 | **TD Pubkey** | `0x4af5d1d8db254edb79ead159a57d4c0102209a123f3eb27a74f9b5221edf4ae38dfddf5005c5f35cd35e4726d7044de1152ecd4393ab507f1fa4ad60132b0d67` |
 | **TD Address** | `0x128B61f611EB624d35c9Af77aAF785432080C8Df` |
+
+</details>
+
+<details markdown id="waves-testnet">
+  <summary>Waves testnet</summary>
+
+Non-EVM pull oracle (Ride dApps). Testnet only, no mainnet deployment. Code: [quex-tech/waves-oracle](https://github.com/quex-tech/waves-oracle).
+
+| Parameter | Value |
+|-----------|-------|
+| **Requests** | `3MrRo5qvNh5qGqdj2BJdHo8iVpubYAxGitr` |
+| **Responses** | `3MsWmSoYo9PBJLunb1xdtDPe78Lx3vDC5wq` |
+| **Quotes** | `3NCHhkLoPit5ATkmQRD1jMJnvRbqNfiFVtP` |
+| **Attested Pools** | `3NBr9GnBCoPmpYXdGyaN6R6FNbDp515xZSF` |
+| **TD Pubkey** | `0x497fe28951ec7035542d889bb149fa7c89a02f9a1ca2eb4dc0d27a081f6afc7b0e4158cf564b214e05b044d346ecd958034d8674ef5af67251d0f7072291d217` |
+| **TD Address** | `0x30fB8B2B14DC07Ab752ec0fb954D955c1fC4CeBF` |
+
+Usage: see the [waves-oracle README](https://github.com/quex-tech/waves-oracle).
 
 </details>
